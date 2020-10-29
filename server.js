@@ -22,16 +22,79 @@ app.use(express.json())
 
 
 //-----ROUTES-------
-// Read ✅
-app.get(['/'], async (request, response) => {
+// Render landing page
+app.get(['/'], async (req, res) => {
     const users = await User.findAll({
         include: 'tasks',
         nest: true
     })
-    response.render("home", {users: users})
+    res.render("home", {users: users})
 })
-
-
+// Create user
+app.post(['/users/create'], async (req, res) => {
+    const user = await User.create(req.body)
+    res.redirect("/all-boards")
+})
+// Update user
+app.post(['/users/:user_id/edit'], async (req,res)=>{
+    const user = await User.findByPk(req.params.user_id)
+    await user.update(req.body)
+    res.redirect(`/user-profile/${user.id}`)
+})
+// Delete user
+app.get(['/users/:user_id/delete'], async (req, res) => {
+    const user = await User.findByPk(req.params.user_id)
+    await user.destroy()
+    res.redirect('/')
+})
+// Render boards page
+app.get(['/users/:user_id/boards/'], async (req, res) => {
+    const boards = await Board.findAll()
+    const users = await User.findAll({
+        include: 'tasks',
+        nest: true
+    })
+    const user = await User.findByPk(req.params.user_id)
+    res.render("all-boards", {users: users, boards: boards, user: user})
+})
+// Create board
+app.post(['/users/:user_id/boards/create'], async (req, res) => {
+    const board = await Board.create(req.body)
+    res.redirect("/all-boards")
+})
+// Update board
+app.post(['/users/:user_id/boards/:board_id/edit'], async (req,res)=>{
+    const board = await Board.findByPk(req.params.board_id)
+    await board.update(req.body)
+    res.redirect(`/board/${board.id}`)
+})
+// Delete board
+app.get(['/users/:user_id/boards/:board_id/delete'], async (req, res) => {
+    const board = await Board.findByPk(req.params.board_id)
+    await board.destroy()
+    res.redirect('/all-boards')
+})
+//Create task
+app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
+    const board = await Board.findByPk(req.params.board_id)
+    await board.createTask(req.body)
+    res.redirect(`/boards/${board.id}`)
+})
+//Update tasks
+app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async (req,res)=>{
+    const task = await Task.findByPk(req.params.task_id)
+    const board = await Board.findByPk(req.params.board_id)
+    const user = await User.findByPk(req.params.user_id)
+    await task.update(req.body)
+    res.redirect(`/board/${board.id}`)
+})
+//Delete tasks
+app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async (req, res) => {
+    const board = await Board.findByPk(req.params.board_id)
+    const task = await Task.findByPk(req.params.task_id)
+    await task.destroy()
+    res.redirect(`/board/${board.id}`)
+})
 
 
 //this is the point where the server is initialised. 

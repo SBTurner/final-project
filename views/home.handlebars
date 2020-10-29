@@ -1,11 +1,10 @@
-<section>
-        {{#each users}}
-        <article class="card">
-            <h1 class="title">{{this.name}} </h1>
-            <img class={{this.id}} src={{this.image}} width="20px">
-            {{#each this.tasks}}
-            <h1>{{this.desc}}</h1>
-            {{/each}}
-        </article>
-        {{/each}}
-</section>
+
+{{#each users}}
+<article class="card">
+    <h1 class="card-header">{{this.name}} </h1>
+    <img class="card-body" src={{this.image}} width="20px">
+    {{#each this.tasks}}
+    <h1 class="card-body">{{this.desc}}</h1>
+    {{/each}}
+</article>
+{{/each}}
