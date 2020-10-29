@@ -1,10 +1,45 @@
+<div class="bg-img">
+</div>
+<div class="select-user-form" id="selectUser">
+    <h3>Select a User</h3>
+    <div class="card">
+        {{#each users}}
+        <a href="/users/{{this.id}}/boards">
+            <div class="card-body" style="background-image: url({{this.image}});">
+                <span class="card-body-tooltip">{{this.name}}</span>
+            </div>
+        </a>
 
-{{#each users}}
-<article class="card">
-    <h1 class="card-header">{{this.name}} </h1>
-    <img class="card-body" src={{this.image}} width="20px">
-    {{#each this.tasks}}
-    <h1 class="card-body">{{this.desc}}</h1>
-    {{/each}}
-</article>
-{{/each}}
+        {{/each}}
+    </div>
+    <p>Don't have one?</p>
+    <div>
+        <button class="btn-create" onclick="openForm()">Create User</button>
+    </div>
+</div>
+
+<div class="create-user-form" id="createUser">
+    <form action="/users/create" method="POST" class="create-user-container">
+        <h4>Create New User</h4>
+
+        <label><br>Name:<br></label>
+        <input type="text" placeholder="Username" name="name" required>
+
+        <lavel><br>Avatar:<br></lavel>
+        <input type="url" placeholder="Avatar Url" name="image" required>
+
+        <button type="submit" class="btn">Create User</button>
+        <button type="button" onclick="closeForm()" class="btn cancel">Cancel</button>
+    </form>
+</div>
+
+<script>
+    function openForm() {
+        document.getElementById("createUser").style.display = "block";
+        document.getElementById("selectUser").style.display = "none";
+    }
+    function closeForm() {
+        document.getElementById("createUser").style.display = "none";
+        document.getElementById("selectUser").style.display = "block";
+    }
+</script>
