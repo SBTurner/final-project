@@ -1,0 +1,33 @@
+{
+  "name": "kanban",
+  "version": "1.0.0",
+  "description": "## Plant UML diagram <a href=\"url\"><img src=\"https://user-images.githubusercontent.com/72227066/97438646-f7acae80-191c-11eb-87fb-9796b55fcca6.png\" align=\"center\" height=\"500\" ></a> ## Wireframes https://docs.google.com/presentation/d/1EaqCfrmcGIwL6P7UwRA8rL7mRYG65F3uQh0EtPkdQQs/edit?usp=sharing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krystyna-garwol/final-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/krystyna-garwol/final-project/issues"
+  },
+  "homepage": "https://github.com/krystyna-garwol/final-project#readme",
+  "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.3",
+    "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.2.0",
+    "handlebars": "^4.7.6",
+    "nodemon": "^2.0.6",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.1"
+  }
+}
