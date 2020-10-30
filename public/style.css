@@ -120,7 +120,6 @@ i {
   }
 }
 
-
 #delete-k {
     min-height: 14rem;
     ;
@@ -129,12 +128,16 @@ i {
 .navbar {
     background-color: #67515D
 }
+.nav-link, .nav-link:visited{
+    color: white;
+    font-size: 1.5em;
+}
 
-.container-fluid-s {
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: auto;
-    margin-left: auto
+.container-fluid-s{
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto
 }
 
 .bg-img-j {
@@ -172,10 +175,12 @@ h4 {
 .card-board-s {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1;
+    grid-template-rows: 1;  
+    border: none;
+
 }
 
-.card-body-s,
+.card-board-body-s,
 .card-body-j {
     background-color: transparent;
     background-size: cover;
@@ -213,8 +218,12 @@ h4 {
     height: 100%;
     width: 100%;
     border-radius: 20px;
+    border: 1px solid lightgray;
     margin: auto;
     padding: 30px;
+}
+.card-board-image-s{
+    border-radius: 20px;
 }
 
 .card-body-j:hover .card-body-tooltip-j {
@@ -300,22 +309,22 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto;
+    margin:  auto;
     background-color: #5d495488;
     border-radius: 20px;
 }
-
-.carousel-indicators-s .active-s {
+   
+.carousel-indicators .active-s{
     background-color: darkgray;
 }
 
-.carousel-control-next-icon-s,
-.carousel-control-prev-icon-s {
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
     filter: invert(1);
     opacity: 0.5;
 }
 
-.carousel-item-s {
+.carousel-item {
     align-items: center;
 }
 
@@ -368,13 +377,11 @@ h4 {
 
 
 /*---Tablet---*/
-
 @media screen and (min-width: 768px) and (max-width: 1023px) {}
 
 
 }
 
+
 /*---Ipad Pro---*/
-
 @media screen and (min-width: 1024px) and (max-width: 1366px) {}
-

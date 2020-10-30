@@ -1,45 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-    <img src="https://images.pexels.com/photos/36445/rose-close-up-pink-flower.jpg?cs=srgb&dl=pexels-pixabay-36445.jpg&fm=jpg"
-        width="30" height="30" alt="">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" href="/users/{{user.id}}/boards">All Boards <span
-                        class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-        <a href="/users/{{user.id}}/profilepage">
-        <img src={{user.image}} width="30" height="30" alt="" style="border-radius: 20px;">
-        </a>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+<img class="logo" src="/images/star.jpg" width="35" height="35" alt="Logo">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item active">
+<a class="nav-link text-right ml-3" href="/users/{{user.id}}/boards">All Boards <span class="sr-only">(current)</span></a>
+</li>
+</ul>
+<a href="/users/{{user.id}}/profilepage"><img class="avatar-nav-k float-right" src={{user.image}} width="35" height="35" alt=""></a>
+</div>
 </nav>
 
 
 
-
-<div class="container-fluid d-flex flex-column justify-center">
-    <div id="all-board-container">
-    <h6 class="text-right m-3"><i>Welcome {{user.name}}!</i></h6>
+<div class="container-fluid-s d-flex flex-column justify-center">
+    <div id="all-board-container-s">
+    <h4 class="text-right px-3 pt-2 mb-0"><i>Welcome {{user.name}}!</i></h4>
     <h1 class="text-center">Boards</h1>
     <div class="my-2">
         <div id="carouselExampleIndicators" class="carousel carousel-multi-item slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
                 {{#each boards}}
-                <div class="{{#if @first }} active carousel-item col-md-4 {{else}} carousel-item col-md-4 clearfix {{/if}}">
-                    <div class="card card-board d-block" style="min-height: 20rem">
-                        <div class="card-body card-board-body">
-                            <h5 class="card-title text-center">{{this.title}}</h5>
-                            <image class="card-img card-board-image"
+                <div class="{{#if @first }} active-s active carousel-item col-md-4 {{else}} carousel-item col-md-4 clearfix {{/if}}">
+                    <div class="card card-board-s d-block" style="min-height: 20rem">
+                        <div class="card-body card-board-body-s">
+                            <h3 class="card-title text-center">{{this.title}}</h3>
+                            <image class="card-img card-board-image-s"
                                 src="https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
                             </image>
                             <div class="card-subtitle">
                             <h6 class="my-2 py-2 text-right">{{this.tasks.length}} tasks</h6>
                             <p class="my-2">Include avatars here!!!</p>
-                                {{!-- {{#each this.tasks}}
-                                    {{#with this.UserId}}
-                                        <p>{{this}}</p>
-                                        <p>{{../../../users.0.name}}</p>
-                                    {{/with}}
-                                {{/each}} --}}
+                                {{#each ../avatars}}
+                                    <p>{{this}}</p>
+                                {{/each}}
                             </div>
                         </div>
                     </div>
@@ -48,7 +44,7 @@
                 <ol class="carousel-indicators">
                     {{#each boards}}
                     <li data-target="#carouselExampleIndicators" data-slide-to="{{this.id}}"
-                        class="{{#if @first}} active {{/if}}"></li>
+                        class="{{#if @first}} active active-s {{/if}}"></li>
                     {{/each}}
                 </ol>
             </div>
@@ -64,32 +60,35 @@
     </div>
 
 
-    <button class="btn btn-secondary my-2 btn-add-board" onclick="createBoard()" type="button">Add Board</button>
+    <button class="btn btn-j btn-secondary my-2 btn-add-board-s" onclick="createBoard()" type="button">Add Board</button>
 
 </div>
 </div>
 
 
-<div class="create-board-form" id="createBoard">
-    <form action="/users/{{user.id}}/boards/create" method="POST" class="create-board-container">
+<div class="create-board-form-s" id="createBoard-s">
+    <form action="/users/{{user.id}}/boards/create" method="POST" class="create-board-container-s">
         <h4>Create New Board</h4>
 
         <label><br>Title:<br></label>
         <input type="text" placeholder="Board Title" name="title" required>
-        
-        <button type="submit" class="btn">Create Board</button>
-        <button type="button" onclick="cancelBoard()" class="btn cancel">Cancel</button>
+
+        <button type="submit" class="btn btn-j">Create Board</button>
+        <button type="button" onclick="cancelBoard()" class="btn btn-j cancel">Cancel</button>
     </form>
 </div>
 
 <script>
     function createBoard() {
-        document.getElementById("createBoard").style.display = "block";
-        document.getElementById("all-board-container").style.display = "none";
+        document.getElementById("createBoard-s").style.display = "block";
+        document.getElementById("all-board-container-s").style.display = "none";
     }
     function cancelBoard() {
-        document.getElementById("createBoard").style.display = "none";
-        document.getElementById("all-board-container").style.display = "block";
+        document.getElementById("createBoard-s").style.display = "none";
+        document.getElementById("all-board-container-s").style.display = "block";
     }
+    Handlebars.registerHelper('index_of', function(context,ndx) {
+        return context[ndx];    
+    });
 
 </script>
