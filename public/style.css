@@ -1,8 +1,92 @@
-* {
-    font-family: "Lato";
+
+/* Individual board page style */
+.body {
+    font-family: 'Lato', sans-serif;
+}
+.main-board-k {
+    margin-top: 4rem;
+}
+.card-todo-k {
+    background-color: #b8e0b9;
+}
+.card-progress-k, .btn-edit-k {
+    background-color: #f4dfa4;
+}
+.card-done-k {
+    background-color: #f3baa5;
+}
+.c-text-k {
+    border: 1px solid #999999;
+    margin: .5rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    background-color: #f8f9fa;
+}
+#board-title-k {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.card-board-k {
+    box-shadow: 6px 6px 6px -6px #999999;
+    min-height: 16rem;
+}
+.card-header-k {
+    font-weight: 400;
+}
+i {
+    color: #737373;
+    cursor: pointer;
+}
+.avatar-k {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+}
+.avatars-group-k {
+    text-align: center;
+    margin-bottom: 3rem;;
+}
+.avatars-group-k > img {
+    margin: .5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+}
+.avatar-nav-k {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+}
+.cards-row-k {
+    margin-top: 3rem;
+}
+.btn-add-k, .back-k, .btn-edit-k {
+    border-radius: 1.3rem;
+    box-shadow: 3px 3px 5px #737373;
+}
+.btn-add-k, .back-k {
+    background-color: #b8e0b9;
+}
+.back-k {
+    background-color: rgb(253, 135, 114);
+    margin-top: 3rem;
+}
+.btn-edit-k {
+    margin-bottom: 1rem;
+}
+.form-popup-k {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+#delete-k {
+    min-height: 14rem;;
 }
 
-.bg-img {
+.bg-img-j {
     z-index: -1;
     background-image: url("https://images.pexels.com/photos/1083822/pexels-photo-1083822.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
     width: 100vw;
@@ -25,7 +109,7 @@ p {
     text-align: center;
 }
 
-.card {
+.card-j {
     background-color: transparent;
     display: grid;
     grid-template-columns: auto auto auto;
@@ -34,7 +118,7 @@ p {
     gap: 1rem;
 }
 
-.card-body {
+.card-body-j {
     background-color: transparent;
     background-size: cover;
     height: 4rem;
@@ -43,7 +127,7 @@ p {
     margin: auto;
 }
 
-.card-body .card-body-tooltip {
+.card-body-j .card-body-tooltip-j {
     visibility: hidden;
     width: 100px;
     background-color: #2D3A3B;
@@ -55,11 +139,11 @@ p {
     z-index: 1;
 }
 
-.card-body:hover .card-body-tooltip {
+.card-body-j:hover .card-body-tooltip-j {
     visibility: visible;
 }
 
-.select-user-form {
+.select-user-form-j {
     margin: 0;
     position: absolute;
     top: 50%;
@@ -73,7 +157,7 @@ p {
     width: 80vw;
 }
 
-.create-user-form {
+.create-user-form-j {
     display: none;
     margin: auto;
     position: fixed;
@@ -88,12 +172,12 @@ p {
     width: 80vw;
 }
 
-.create-user-container {
+.create-user-container-j {
     padding: 10px;
 }
 
-.create-user-container input[type=text],
-.create-user-container input[type="url"] {
+.create-user-container-j input[type=text],
+.create-user-container-j input[type="url"] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
@@ -102,7 +186,7 @@ p {
     border-radius: 10px;
 }
 
-.btn {
+.btn-j {
     float: flex;
     background-color: #5d495488;
     margin: auto;
@@ -115,7 +199,7 @@ p {
     opacity: 0.8;
 }
 
-.btn-create {
+.btn-create-j {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,19 +209,45 @@ p {
 }
 
 @media screen and (min-width: 40em) {
-    .select-user-form {
+    .select-user-form-j {
         width: 60vw;
     }
-    .create-user-form {
+    .create-user-form-j {
         width: 60vw;
     }
 }
 
 @media screen and (min-width: 60em) {
-    .select-user-form {
+    .select-user-form-j {
         width: 30vw;
     }
-    .create-user-form {
+    .create-user-form-j {
         width: 30vw;
     }
+  
+  /*---MEDIA QUERIES---*/
+/*---Mobile---*/
+@media screen and (max-width: 767px) {
+    .card-k {
+        margin-top: 1rem;
+    }
+    .avatars-group-k {
+        margin-bottom: 1.5rem;
+    }
+    .cards-row-k {
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+    }
+    .back-k {
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+    }
+}
+/*---Tablet---*/
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+/*---Ipad Pro---*/
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+
 }

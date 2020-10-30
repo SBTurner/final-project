@@ -3,6 +3,7 @@ const Handlebars = require("handlebars")
 const expressHandlebars = require("express-handlebars")
 const { allowInsecurePrototypeAccess } = require("@handlebars/allow-prototype-access")
 
+
 const { Board, Task, User, db } = require("./models/models")
 const { request } = require("express")
 
@@ -31,6 +32,7 @@ app.get(['/'], async (req, res) => {
 })
 // Create user
 app.post(['/users/create'], async (req, res) => {
+
     const user = await User.create({ name: req.body.name, image: req.body.image })
     res.redirect(`/users/${user.id}/boards`)
 })
@@ -59,8 +61,20 @@ app.get(['/users/:user_id/boards/'], async (req, res) => {
     const user = await User.findByPk(req.params.user_id)
     res.render("all-boards", { users: users, boards: boards, user: user })
 })
+//Render individual board page
+app.get('/users/:user_id/boards/:board_id', async (req, res) => {
+    const board = await Board.findByPk(req.params.board_id)
+    const users = await User.findAll({
+        include: 'tasks',
+        nest: true
+    })
+    const tasks = await board.getTasks()
+    const user = await User.findByPk(req.params.user_id)
+    res.render('board', {board, user, users, tasks})
+})
 // Create board
 app.post(['/users/:user_id/boards/create'], async (req, res) => {
+
     const board = await Board.create({ title: req.body.title })
     res.redirect("/all-boards")
 })
@@ -81,6 +95,7 @@ app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
     //const user = await User.findByPk(req.params.user_id)
     // !!!!!!  Pass in a specific user ID based on who is selected  !!!!!!
+
     await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id })
     res.redirect(`/boards/${board.id}`)
 })
@@ -106,6 +121,7 @@ app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async (req, 
 app.listen(3000, () => {
     db.sync().then(async () => {
         const boards = await Board.findAll()
+
         if (boards.length > 0) {
             return
         }
@@ -124,5 +140,4 @@ app.listen(3000, () => {
     }).catch(console.error)
     console.log('port = ', 3000)
 })
-
 
