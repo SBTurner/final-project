@@ -1,11 +1,20 @@
 /* Individual board page style */
 
+.logo{
+    border-radius: 5px;
+   }
+.navbar{
+    background-color: #67515D
+   }
+.nav-link, .nav-link:visited{
+    color: white;
+    font-size: 1.5em;
+   }
+
 .body {
     font-family: 'Lato', sans-serif;
 }
-.logo{
-    border-radius: 5px;
-}
+
 .main-board-k {
     margin-top: 4rem;
 }
@@ -107,6 +116,8 @@ i {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 99 !important;
+  }
 }
 
 #delete-k {
@@ -148,9 +159,9 @@ h4 {
     padding: 20px;
 }
 
-p {
+/* p {
     text-align: center;
-}
+} */
 
 .card-j {
     background-color: transparent;
@@ -166,6 +177,7 @@ p {
     grid-template-columns: auto;
     grid-template-rows: 1;  
     border: none;
+
 }
 
 .card-board-body-s,
@@ -301,8 +313,7 @@ p {
     background-color: #5d495488;
     border-radius: 20px;
 }
-
-    
+   
 .carousel-indicators .active-s{
     background-color: darkgray;
 }
@@ -312,6 +323,7 @@ p {
     filter: invert(1);
     opacity: 0.5;
 }
+
 .carousel-item {
     align-items: center;
 }
@@ -365,10 +377,11 @@ p {
 
 
 /*---Tablet---*/
-
 @media screen and (min-width: 768px) and (max-width: 1023px) {}
 
 
-/*---Ipad Pro---*/
+}
 
+
+/*---Ipad Pro---*/
 @media screen and (min-width: 1024px) and (max-width: 1366px) {}
