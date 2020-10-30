@@ -35,23 +35,22 @@
       <div class="card-header card-header-k">TO DO</div>
       <div class="card-todo-k card-body">
         {{#each tasks}}
-        <div id="draggable" draggable="true">
+        <div>
         <p class="c-text-k card-text"><img class="avatar-k" src="{{../user.image}}">&nbsp; {{this.desc}} &nbsp; 
-        <a onclick="openEditTask()"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
+        <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
         <i onclick="openDelete()"class="fas fa-trash-alt"></i></p>
         </div>
-        
-
+    
 
         {{!---Edit Task Pop Up Card---}}   
-      <div id="edit-task" class="form-popup-k col-sm-4">
+      <div id="edit-task-{{this.id}}" class="form-popup-k col-sm-4">
       <div class="card card-board-k">
       <div class="card-header card-header-k">Edit Task</div>
       <div class="card-body">
         <form action="/users/{{../user.id}}/boards/{{this.BoardId}}/tasks/{{this.id}}/edit" method="POST">
           <div class="form-group">
             <label for="task-desc">Task Description</label>
-            <input type="text" class="form-control" id="task-desc" value="{{this.desc}}">
+            <input name="desc" type="text" class="form-control" id="task-desc" value="{{this.desc}}">
           </div>
           <div class="form-group">
             <label for="assign">Assign User</label>
@@ -73,7 +72,7 @@
         </form>
         <div class="d-flex justify-content-between align-items-center">
           <i class="fas fa-trash-alt"></i>
-          <i onclick="closeEditTask()" class="far fa-times-circle fa-lg"></i>
+          <i onclick="closeEditTask('{{this.id}}')" class="far fa-times-circle fa-lg"></i>
           </div>
         </div>
         </div>
@@ -167,11 +166,11 @@
   function closeAddTask() {
       document.getElementById("add-task").style.display = "none";
   }
-  function openEditTask() {
-    document.getElementById("edit-task").style.display = "block";
+  function openEditTask(id) {
+    document.getElementById(`edit-task-${id}`).style.display = "block";
   }
-  function closeEditTask() {
-      document.getElementById("edit-task").style.display = "none";
+  function closeEditTask(id) {
+      document.getElementById(`edit-task-${id}`).style.display = "none";
   }
   function openDelete() {
     document.getElementById("delete-k").style.display = "block";
@@ -184,3 +183,39 @@
   
 </script>
 
+
+ {{!---Edit Task Pop Up Card---}}   
+      {{!-- <div id="edit-task" class="form-popup-k col-sm-4">
+      <div class="card card-board-k">
+      <div class="card-header card-header-k">Edit Task</div>
+      <div class="card-body">
+        <form action="/users/{{../user.id}}/boards/{{this.BoardId}}/tasks/{{this.id}}/edit" method="POST">
+          <div class="form-group">
+            <label for="task-desc">Task Description</label>
+            <input type="text" class="form-control" id="task-desc" value="{{this.desc}}">
+          </div>
+          <div class="form-group">
+            <label for="assign">Assign User</label>
+            <select name="selectpicker" class="form-control" id="assign">
+              {{#each ../users}}
+              <option>{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="move">Move to</label>
+            <select class="form-control" id="move">
+              <option>To Do</option>
+              <option>In Progress</option>
+              <option>Done</option>
+            </select>
+          </div>
+          <button type="submit" class=" btn-edit-k btn"><i class="fas fa-check"></i>&nbsp; Submit</button>
+        </form>
+        <div class="d-flex justify-content-between align-items-center">
+          <i class="fas fa-trash-alt"></i>
+          <i onclick="closeEditTask()" class="far fa-times-circle fa-lg"></i>
+          </div>
+        </div>
+        </div>
+        </div> --}}
