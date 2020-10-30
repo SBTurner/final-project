@@ -3,11 +3,13 @@
         width="30" height="30" alt="">
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active"><a class="nav-link" href="/all-boards">All Boards <span
+            <li class="nav-item active"><a class="nav-link" href="/users/{{user.id}}/boards">All Boards <span
                         class="sr-only">(current)</span></a>
             </li>
         </ul>
-        <img src={{user.image}} width="30" height="30" alt="">
+        <a href="/users/{{user.id}}/profilepage">
+        <img src={{user.image}} width="30" height="30" alt="" style="border-radius: 20px;">
+        </a>
     </div>
 </nav>
 
