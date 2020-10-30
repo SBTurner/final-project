@@ -1,130 +1,62 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <img src="https://images.pexels.com/photos/36445/rose-close-up-pink-flower.jpg?cs=srgb&dl=pexels-pixabay-36445.jpg&fm=jpg" width="30" height="30" alt="">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/all-boards">All Boards <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
-        <img class="avatar-nav" src={{user.image}} width="30" height="30" alt="">
-  </div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+ <img class="logo" src="/images/star.jpg" width="35" height="35" alt="Logo">
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+ <span class="navbar-toggler-icon"></span>
+ </button>
+ 
+ <div class="collapse navbar-collapse" id="navbarSupportedContent">
+ <ul class="navbar-nav mr-auto">
+ <li class="nav-item active">
+ <a class="nav-link text-right ml-3" href="/users/{{user.id}}/boards">All Boards <span class="sr-only">(current)</span></a>
+ </li>
+ </ul>
+ <a href="/user-profile"><img class="avatar-nav-k float-right" src={{user.image}} width="35" height="35" alt=""></a>
+ </div>
 </nav>
-<main>
-  <div class="main-board container">
 
-    <p id="board-title">{{board.title}}</p>
-    <div class="avatars-group d-flex justify-content-center">
+<main>
+  <div class="main-board-k container">
+
+    <p id="board-title-k">{{board.title}}</p>
+    <div class="avatars-group-k d-flex justify-content-center">
       {{#each users}}
       <img src="{{this.image}}">
       {{/each}}
     </div>
 
     <div class="d-flex justify-content-between align-items-center">
-      <a onclick="openAddTask()"><button type="button" class=" btn-add btn"><i class="fas fa-plus"></i>&nbsp; Add Task</button></a>
+      <a onclick="openAddTask()"><button type="button" class=" btn-add-k btn"><i class="fas fa-plus"></i>&nbsp; Add Task</button></a>
       <i class="fas fa-trash-alt fa-2x"></i>
     </div>
 
-    <div class="cards-row row">
+    <div class="cards-row-k row">
       <div class="col-sm-4">
-    <div class="card card-board">
-      <div class="card-header">TO DO</div>
-      <div class="card-todo card-body">
+    <div class="card card-board-k card-drag">
+      <div class="card-header card-header-k">TO DO</div>
+      <div class="card-todo-k card-body">
         {{#each tasks}}
-        <div>
-        <p class="c-text card-text"><img class="avatar" src="{{../user.image}}">&nbsp; {{this.desc}} &nbsp; 
+        <div id="draggable" draggable="true">
+        <p class="c-text-k card-text"><img class="avatar-k" src="{{../user.image}}">&nbsp; {{this.desc}} &nbsp; 
         <a onclick="openEditTask()"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
         <i onclick="openDelete()"class="fas fa-trash-alt"></i></p>
         </div>
+        
 
-        {{!---Delete Pop Up Card---}}   
-      <div id="delete" class="form-popup col-sm-4">
-      <div class="card">
+
+        {{!---Edit Task Pop Up Card---}}   
+      <div id="edit-task" class="form-popup-k col-sm-4">
+      <div class="card card-board-k">
+      <div class="card-header card-header-k">Edit Task</div>
       <div class="card-body">
-        <form>
-          <div class="form-group">
-            <p>Are you sure you want to delete this task?</p>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-          <a href="/users/{{../user.id}}/boards/{{../board.id}}/tasks/{{this.id}}/delete">
-          <button type="button" class=" btn-add btn"><i class="fas fa-plus"></i>&nbsp; Delete</button>
-          </a>
-          <i onclick="closeDelete()" class="far fa-times-circle fa-lg"></i>
-          </div>
-        </form>
-        </div>
-        </div>
-        </div>
-        {{/each}}
-        </div>
-        </div>
-        </div>
-
-        <div class="col-sm-4">
-    <div class="card card-board">
-      <div class="card-header">IN PROGRESS</div>
-      <div class="card-progress card-body">
-        </div>
-        </div>
-        </div>
-
-        <div class="col-sm-4">
-          <div class="card card-board">
-        <div class="card-header">DONE</div>
-        <div class="card-done card-body">
-          </div>
-          </div>
-          </div>
-          </div>
-
-          <a href="/all-boards"><button type="button" class="btn back"><i class="fas fa-arrow-left"></i>&nbsp; Home</button></a>
-
-
-{{!---Add Task Pop Up Card---}}   
-      <div id="add-task" class="form-popup col-sm-4">
-        <div class="card card-board">
-      <div class="card-header">Add Task</div>
-      <div class="card-body">
-        <form>
+        <form action="/users/{{../user.id}}/boards/{{this.BoardId}}/tasks/{{this.id}}/edit" method="POST">
           <div class="form-group">
             <label for="task-desc">Task Description</label>
-            <input type="text" class="form-control" id="task-desc" placeholder="Your new task description">
+            <input type="text" class="form-control" id="task-desc" value="{{this.desc}}">
           </div>
           <div class="form-group">
-            <label for="assign-user">Assign User</label>
-            <select class="form-control" id="assign-user">
-              <option>User 1</option>
-              <option>User 2</option>
-              <option>User 3</option>
-            </select>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-          <button type="button" class=" btn-add btn"><i class="fas fa-plus"></i>&nbsp; Submit</button>
-          <i onclick="closeAddTask()" class="far fa-times-circle fa-lg"></i>
-          </div>
-        </form>
-        </div>
-        </div>
-        </div>
-
-
-    {{!---Edit Task Pop Up Card---}}   
-      <div id="edit-task" class="form-popup col-sm-4">
-      <div class="card card-board">
-      <div class="card-header">Edit Task</div>
-      <div class="card-body">
-        <form>
-          <div class="form-group">
-            <label for="task-desc">Task Description</label>
-            <input type="text" class="form-control" id="task-desc" placeholder="Your new task description">
-          </div>
-          <div class="form-group">
-            <label for="assign-user">Assign User</label>
-            <select class="form-control" id="assign-user">
-              {{#each users}}
+            <label for="assign">Assign User</label>
+            <select name="selectpicker" class="form-control" id="assign">
+              {{#each ../users}}
               <option>{{this.name}}</option>
               {{/each}}
             </select>
@@ -137,7 +69,7 @@
               <option>Done</option>
             </select>
           </div>
-          <button type="button" class=" btn-edit btn"><i class="fas fa-check"></i>&nbsp; Submit</button>
+          <button type="submit" class=" btn-edit-k btn"><i class="fas fa-check"></i>&nbsp; Submit</button>
         </form>
         <div class="d-flex justify-content-between align-items-center">
           <i class="fas fa-trash-alt"></i>
@@ -147,7 +79,77 @@
         </div>
         </div>
 
-      
+        {{!---Delete Pop Up Card---}}   
+      <div id="delete-k" class="form-popup-k col-sm-4">
+      <div class="card">
+      <div class="card-body">
+        <form>
+          <div class="form-group">
+            <p>Are you sure you want to delete this task?</p>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+          <a href="/users/{{../user.id}}/boards/{{../board.id}}/tasks/{{this.id}}/delete">
+          <button type="button" class=" btn-add-k btn"><i class="fas fa-plus"></i>&nbsp; Delete</button>
+          </a>
+          <i onclick="closeDelete()" class="far fa-times-circle fa-lg"></i>
+          </div>
+        </form>
+        </div>
+        </div>
+        </div>
+
+        {{/each}}
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-4">
+    <div class="card card-board-k card-drag">
+      <div class="card-header">IN PROGRESS</div>
+      <div class="card-progress-k card-body">
+        </div>
+        </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card card-board-k card-drag">
+        <div class="card-header">DONE</div>
+        <div class="card-done-k card-body">
+          </div>
+          </div>
+          </div>
+          </div>
+
+          <a href="/users/{{user.id}}/boards"><button type="button" class="btn back-k"><i class="fas fa-arrow-left"></i>&nbsp; All Boards</button></a>
+
+
+{{!---Add Task Pop Up Card---}}   
+      <div id="add-task" class="form-popup-k col-sm-4">
+        <div class="card card-board-k">
+      <div class="card-header card-header-k">Add Task</div>
+      <div class="card-body">
+        <form action="/users/{{user.id}}/boards/{{board.id}}/tasks/create" method="POST">
+          <div class="form-group">
+            <label for="task-desc">Task Description</label>
+            <input name="desc" type="text" class="form-control" id="task-desc" placeholder="Your new task description">
+          </div>
+          <div class="form-group">
+            <label for="assign">Assign User</label>
+            <select name="selectpicker" class="form-control" id="assign">
+              {{#each users}}
+              <option value="{{this.id}}">{{this.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+          <button type="submit" class=" btn-add-k btn"><i class="fas fa-plus"></i>&nbsp; Submit</button>
+          <i onclick="closeAddTask()" class="far fa-times-circle fa-lg"></i>
+          </div>
+        </form>
+        </div>
+        </div>
+        </div>
+
 
 <div style="margin-bottom: 3rem;">
 
@@ -155,7 +157,10 @@
         </div>
 </main >
 
+
+
 <script>
+  //Pop up
   function openAddTask() {
     document.getElementById("add-task").style.display = "block";
   }
@@ -169,10 +174,13 @@
       document.getElementById("edit-task").style.display = "none";
   }
   function openDelete() {
-    document.getElementById("delete").style.display = "block";
+    document.getElementById("delete-k").style.display = "block";
   }
   function closeDelete() {
-      document.getElementById("delete").style.display = "none";
+      document.getElementById("delete-k").style.display = "none";
   }
+
+  //Drag and Drop
+  
 </script>
 

@@ -94,26 +94,29 @@ app.get(['/users/:user_id/boards/:board_id/delete'], async (req, res) => {
 //Create task
 app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
-    //const user = await User.findByPk(req.params.user_id)
-    // !!!!!!  Pass in a specific user ID based on who is selected  !!!!!!
-
-    await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id })
-    res.redirect(`/boards/${board.id}`)
+    const user = await User.findByPk(req.params.user_id)
+    const selectUser = await User.findByPk(req.body.selectpicker)
+    await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 //Update tasks
 app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async (req, res) => {
     const task = await Task.findByPk(req.params.task_id)
     const board = await Board.findByPk(req.params.board_id)
     const user = await User.findByPk(req.params.user_id)
-    await task.update(req.body)
-    res.redirect(`/board/${board.id}`)
+    await task.update({
+        desc: req.body.desc
+    })
+    console.log(task.desc)
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 //Delete tasks
 app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
+    const user = await User.findByPk(req.params.user_id)
     const task = await Task.findByPk(req.params.task_id)
     await task.destroy()
-    res.redirect(`/board/${board.id}`)
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 
 
