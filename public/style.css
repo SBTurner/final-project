@@ -1,0 +1,113 @@
+/* Individual board page style */
+.body {
+    font-family: 'Lato', sans-serif;
+}
+.main-board {
+    margin-top: 4rem;
+}
+.card-todo {
+    background-color: #b8e0b9;
+}
+.card-progress, .btn-edit {
+    background-color: #f4dfa4;
+}
+.card-done {
+    background-color: #f3baa5;
+}
+.c-text {
+    border: 1px solid #999999;
+    margin: .5rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    background-color: #f8f9fa;
+}
+#board-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.card-board {
+    box-shadow: 6px 6px 6px -6px #999999;
+    min-height: 16rem;
+}
+.card-header {
+    font-weight: 400;
+}
+i {
+    color: #737373;
+    cursor: pointer;
+}
+.avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1rem;
+}
+.avatars-group {
+    text-align: center;
+    margin-bottom: 3rem;;
+}
+.avatars-group > img {
+    margin: .5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+}
+.avatar-nav {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 1rem;
+}
+.cards-row {
+    margin-top: 3rem;
+}
+.btn-add, .back, .btn-edit {
+    border-radius: 1.3rem;
+    box-shadow: 3px 3px 5px #737373;
+}
+.btn-add, .back {
+    background-color: #b8e0b9;
+}
+.back {
+    background-color: rgb(253, 135, 114);
+    margin-top: 3rem;
+}
+.btn-edit {
+    margin-bottom: 1rem;
+}
+.form-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+#delete {
+    min-height: 14rem;;
+}
+
+/*---MEDIA QUERIES---*/
+/*---Mobile---*/
+@media screen and (max-width: 767px) {
+    .card {
+        margin-top: 1rem;
+    }
+    .avatars-group {
+        margin-bottom: 1.5rem;
+    }
+    .cards-row {
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+    }
+    .back {
+        margin-top: 0rem;
+        margin-bottom: 2rem;
+    }
+}
+/*---Tablet---*/
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+/*---Ipad Pro---*/
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+
+}
