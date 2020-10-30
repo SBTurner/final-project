@@ -58,8 +58,28 @@ app.get(['/users/:user_id/boards'], async (req, res) => {
         include: 'tasks',
         nest: true
     })
+    // get array of user Ids per board
+    const avatars = []
+        for (i=0; i<boards.length; i++){
+            const brd_all_users = []
+            for (j=0; j<boards[i].tasks.length; j++){
+                brd_all_users.push(boards[i].tasks[j].UserId)}
+            if (j==boards[i].tasks.length){
+                const brd_unique_users= brd_all_users.filter((val,idx,self)=>{return self.indexOf(val)===idx})
+                avatars.push(brd_unique_users)
+            }
+        }
+        
+
+    //console.log(avatars)
     const user = await User.findByPk(req.params.user_id)
-    res.render("all-boards", { users: users, boards: boards, user: user })
+    res.render("all-boards", { users, boards, user, avatars})
+})
+// Create board
+app.post(['/users/:user_id/boards/create'], async (req, res) => {
+    const user = await User.findByPk(req.params.user_id) 
+    const board = await Board.create({ title: req.body.title })
+    res.redirect(`/users/${user.id}/boards`)
 })
 //Render individual board page
 app.get('/users/:user_id/boards/:board_id', async (req, res) => {
@@ -71,12 +91,6 @@ app.get('/users/:user_id/boards/:board_id', async (req, res) => {
     const tasks = await board.getTasks()
     const user = await User.findByPk(req.params.user_id)
     res.render('board', {board, user, users, tasks})
-})
-// Create board
-app.post(['/users/:user_id/boards/create'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id) 
-    const board = await Board.create({ title: req.body.title })
-    res.redirect(`/users/${user.id}/boards`)
 })
 // Update board
 app.post(['/users/:user_id/boards/:board_id/edit'], async (req, res) => {
@@ -96,7 +110,6 @@ app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
     //const user = await User.findByPk(req.params.user_id)
     // !!!!!!  Pass in a specific user ID based on who is selected  !!!!!!
-
     await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id })
     res.redirect(`/boards/${board.id}`)
 })
