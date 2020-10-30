@@ -5,27 +5,15 @@
         "tasks": [
                 {
                     "desc": "Task 1",
-                    "status": 0,
-                    "user": [{
-                        "name": "Sarah",
-                        "image": "https://images.pexels.com/photos/36445/rose-close-up-pink-flower.jpg?cs=srgb&dl=pexels-pixabay-36445.jpg&fm=jpg"
-                    }]
+                    "status": 0
                 },
                 {
                     "desc": "Task 2",
-                    "status": 1,
-                    "user": [{
-                        "name": "Josie",
-                        "image": "https://images.pexels.com/photos/1590551/pexels-photo-1590551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                    }]
+                    "status": 1
                 },
                 {
                     "desc": "Task 3",
-                    "status": 0,
-                    "user": [{
-                        "name": "Krystyna",
-                        "image": "https://images.pexels.com/photos/36445/rose-close-up-pink-flower.jpg?cs=srgb&dl=pexels-pixabay-36445.jpg&fm=jpg"
-                    }]
+                    "status": 0
                 }
         ]
     }
