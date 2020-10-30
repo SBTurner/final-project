@@ -85,6 +85,15 @@ i {
 #delete-k {
     min-height: 14rem;;
 }
+.navbar{
+    background-color: #67515D
+}
+.container-fluid-s{
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto
+}
 
 .bg-img-j {
     z-index: -1;
@@ -118,7 +127,16 @@ p {
     gap: 1rem;
 }
 
+
+.card-board-s {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 1;  
+}
+
+.card-body-s,
 .card-body-j {
+
     background-color: transparent;
     background-size: cover;
     height: 4rem;
@@ -137,6 +155,15 @@ p {
     padding: 5px 0;
     position: absolute;
     z-index: 1;
+}
+.card-board-body-s {
+    background-color:#F6F3F4;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    margin: auto;
+    padding: 30px;
 }
 
 .card-body-j:hover .card-body-tooltip-j {
@@ -157,7 +184,10 @@ p {
     width: 80vw;
 }
 
+
+.create-board-form-s,
 .create-user-form-j {
+
     display: none;
     margin: auto;
     position: fixed;
@@ -176,6 +206,9 @@ p {
     padding: 10px;
 }
 
+
+
+.create-board-container-s input[type=text],
 .create-user-container-j input[type=text],
 .create-user-container-j input[type="url"] {
     width: 100%;
@@ -207,6 +240,30 @@ p {
     background-color: #5d495488;
     border-radius: 10px;
 }
+.btn-add-board-s {
+    width: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    background-color: #5d495488;
+    border-radius: 20px;
+}
+
+    
+.carousel-indicators-s .active-s{
+    background-color: darkgray;
+}
+
+.carousel-control-next-icon-s,
+.carousel-control-prev-icon-s {
+    filter: invert(1);
+    opacity: 0.5;
+}
+.carousel-item-s {
+    align-items: center;
+}
+
 
 @media screen and (min-width: 40em) {
     .select-user-form-j {
@@ -224,6 +281,8 @@ p {
     .create-user-form-j {
         width: 30vw;
     }
+}
+
   
   /*---MEDIA QUERIES---*/
 /*---Mobile---*/
@@ -251,3 +310,4 @@ p {
 @media screen and (min-width: 1024px) and (max-width: 1366px) {
 
 }
+

@@ -1,12 +1,93 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <img src="https://images.pexels.com/photos/36445/rose-close-up-pink-flower.jpg?cs=srgb&dl=pexels-pixabay-36445.jpg&fm=jpg" width="30" height="30" alt="">
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/all-boards">All Boards <span class="sr-only">(current)</span></a>
-      </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-light">
+    <img src="https://images.pexels.com/photos/36445/rose-close-up-pink-flower.jpg?cs=srgb&dl=pexels-pixabay-36445.jpg&fm=jpg"
+        width="30" height="30" alt="">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a class="nav-link" href="/all-boards">All Boards <span
+                        class="sr-only">(current)</span></a>
+            </li>
+        </ul>
         <img src={{user.image}} width="30" height="30" alt="">
-  </div>
+    </div>
 </nav>
+
+
+
+
+<div class="container-fluid d-flex flex-column justify-center">
+    <div id="all-board-container">
+    <h6 class="text-right m-3"><i>Welcome {{user.name}}!</i></h6>
+    <h1 class="text-center">Boards</h1>
+    <div class="my-2">
+        <div id="carouselExampleIndicators" class="carousel carousel-multi-item slide" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+                {{#each boards}}
+                <div class="{{#if @first }} active carousel-item col-md-4 {{else}} carousel-item col-md-4 clearfix {{/if}}">
+                    <div class="card card-board d-block" style="min-height: 20rem">
+                        <div class="card-body card-board-body">
+                            <h5 class="card-title text-center">{{this.title}}</h5>
+                            <image class="card-img card-board-image"
+                                src="https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+                            </image>
+                            <div class="card-subtitle">
+                            <h6 class="my-2 py-2 text-right">{{this.tasks.length}} tasks</h6>
+                            <p class="my-2">Include avatars here!!!</p>
+                                {{!-- {{#each this.tasks}}
+                                    {{#with this.UserId}}
+                                        <p>{{this}}</p>
+                                        <p>{{../../../users.0.name}}</p>
+                                    {{/with}}
+                                {{/each}} --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+                <ol class="carousel-indicators">
+                    {{#each boards}}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{this.id}}"
+                        class="{{#if @first}} active {{/if}}"></li>
+                    {{/each}}
+                </ol>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+
+
+    <button class="btn btn-secondary my-2 btn-add-board" onclick="createBoard()" type="button">Add Board</button>
+
+</div>
+</div>
+
+
+<div class="create-board-form" id="createBoard">
+    <form action="/users/{{user.id}}/boards/create" method="POST" class="create-board-container">
+        <h4>Create New Board</h4>
+
+        <label><br>Title:<br></label>
+        <input type="text" placeholder="Board Title" name="title" required>
+        
+        <button type="submit" class="btn">Create Board</button>
+        <button type="button" onclick="cancelBoard()" class="btn cancel">Cancel</button>
+    </form>
+</div>
+
+<script>
+    function createBoard() {
+        document.getElementById("createBoard").style.display = "block";
+        document.getElementById("all-board-container").style.display = "none";
+    }
+    function cancelBoard() {
+        document.getElementById("createBoard").style.display = "none";
+        document.getElementById("all-board-container").style.display = "block";
+    }
+
+</script>
