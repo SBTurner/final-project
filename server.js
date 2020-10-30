@@ -32,18 +32,23 @@ app.get(['/'], async (req, res) => {
 })
 // Create user
 app.post(['/users/create'], async (req, res) => {
-
     const user = await User.create({ name: req.body.name, image: req.body.image })
     res.redirect(`/users/${user.id}/boards`)
 })
+//  Render profile page
+app.get(['/users/:user_id/profilepage'], async (req, res) => {
+    const user = await User.findByPk(req.params.user_id)
+    const tasks = await Task.findAll({ where: { UserId: req.params.user_id } })
+    res.render("user-profile", { user: user, tasks: tasks })
+})
 // Update user
-app.post(['/users/:user_id/edit'], async (req, res) => {
+app.post(['/users/:user_id/profilepage/edit'], async (req, res) => {
     const user = await User.findByPk(req.params.user_id)
     await user.update(req.body)
-    res.redirect(`/user-profile/${user.id}`)
+    res.redirect(`/users/${user.id}/profilepage`)
 })
 // Delete user
-app.get(['/users/:user_id/delete'], async (req, res) => {
+app.get(['/users/:user_id/profilepage/delete'], async (req, res) => {
     const user = await User.findByPk(req.params.user_id)
     await user.destroy()
     res.redirect('/')
@@ -60,26 +65,19 @@ app.get(['/users/:user_id/boards'], async (req, res) => {
     })
     // get array of user Ids per board
     const avatars = []
-        for (i=0; i<boards.length; i++){
-            const brd_all_users = []
-            for (j=0; j<boards[i].tasks.length; j++){
-                brd_all_users.push(boards[i].tasks[j].UserId)}
-            if (j==boards[i].tasks.length){
-                const brd_unique_users= brd_all_users.filter((val,idx,self)=>{return self.indexOf(val)===idx})
-                avatars.push(brd_unique_users)
-            }
+    for (i = 0; i < boards.length; i++) {
+        const brd_all_users = []
+        for (j = 0; j < boards[i].tasks.length; j++) {
+            brd_all_users.push(boards[i].tasks[j].UserId)
         }
-        
-
+        if (j == boards[i].tasks.length) {
+            const brd_unique_users = brd_all_users.filter((val, idx, self) => { return self.indexOf(val) === idx })
+            avatars.push(brd_unique_users)
+        }
+    }
     //console.log(avatars)
     const user = await User.findByPk(req.params.user_id)
-    res.render("all-boards", { users, boards, user, avatars})
-})
-// Create board
-app.post(['/users/:user_id/boards/create'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id) 
-    const board = await Board.create({ title: req.body.title })
-    res.redirect(`/users/${user.id}/boards`)
+    res.render("all-boards", { users, boards, user, avatars })
 })
 //Render individual board page
 app.get('/users/:user_id/boards/:board_id', async (req, res) => {
@@ -90,7 +88,13 @@ app.get('/users/:user_id/boards/:board_id', async (req, res) => {
     })
     const tasks = await board.getTasks()
     const user = await User.findByPk(req.params.user_id)
-    res.render('board', {board, user, users, tasks})
+    res.render('board', { board, user, users, tasks })
+})
+// Create board
+app.post(['/users/:user_id/boards/create'], async (req, res) => {
+    const user = await User.findByPk(req.params.user_id) 
+    const board = await Board.create({ title: req.body.title })
+    res.redirect(`/users/${user.id}/boards`)
 })
 // Update board
 app.post(['/users/:user_id/boards/:board_id/edit'], async (req, res) => {
@@ -100,7 +104,7 @@ app.post(['/users/:user_id/boards/:board_id/edit'], async (req, res) => {
 })
 // Delete board
 app.get(['/users/:user_id/boards/:board_id/delete'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id) 
+    const user = await User.findByPk(req.params.user_id)
     const board = await Board.findByPk(req.params.board_id)
     await board.destroy()
     res.redirect(`/users/${user.id}/boards`)
@@ -108,10 +112,10 @@ app.get(['/users/:user_id/boards/:board_id/delete'], async (req, res) => {
 //Create task
 app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
-    //const user = await User.findByPk(req.params.user_id)
-    // !!!!!!  Pass in a specific user ID based on who is selected  !!!!!!
-    await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id })
-    res.redirect(`/boards/${board.id}`)
+    const user = await User.findByPk(req.params.user_id)
+    const selectUser = await User.findByPk(req.body.selectpicker)
+    await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 //Update tasks
 app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async (req, res) => {
@@ -119,14 +123,16 @@ app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async (req, r
     const board = await Board.findByPk(req.params.board_id)
     const user = await User.findByPk(req.params.user_id)
     await task.update(req.body)
-    res.redirect(`/board/${board.id}`)
+    console.log(task)
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 //Delete tasks
 app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
+    const user = await User.findByPk(req.params.user_id)
     const task = await Task.findByPk(req.params.task_id)
     await task.destroy()
-    res.redirect(`/board/${board.id}`)
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 
 
@@ -154,4 +160,3 @@ app.listen(3000, () => {
     }).catch(console.error)
     console.log('port = ', 3000)
 })
-
