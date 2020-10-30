@@ -49,7 +49,7 @@ app.get(['/users/:user_id/delete'], async (req, res) => {
     res.redirect('/')
 })
 // Render boards page
-app.get(['/users/:user_id/boards/'], async (req, res) => {
+app.get(['/users/:user_id/boards'], async (req, res) => {
     const boards = await Board.findAll({
         include: 'tasks',
         nest: true
@@ -74,9 +74,9 @@ app.get('/users/:user_id/boards/:board_id', async (req, res) => {
 })
 // Create board
 app.post(['/users/:user_id/boards/create'], async (req, res) => {
-
+    const user = await User.findByPk(req.params.user_id) 
     const board = await Board.create({ title: req.body.title })
-    res.redirect("/all-boards")
+    res.redirect(`/users/${user.id}/boards`)
 })
 // Update board
 app.post(['/users/:user_id/boards/:board_id/edit'], async (req, res) => {
@@ -86,9 +86,10 @@ app.post(['/users/:user_id/boards/:board_id/edit'], async (req, res) => {
 })
 // Delete board
 app.get(['/users/:user_id/boards/:board_id/delete'], async (req, res) => {
+    const user = await User.findByPk(req.params.user_id) 
     const board = await Board.findByPk(req.params.board_id)
     await board.destroy()
-    res.redirect('/all-boards')
+    res.redirect(`/users/${user.id}/boards`)
 })
 //Create task
 app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
