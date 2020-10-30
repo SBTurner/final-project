@@ -1,12 +1,12 @@
-<div class="bg-img">
+<div class="bg-img-j">
 </div>
-<div class="select-user-form" id="selectUser">
+<div class="select-user-form-j" id="selectUser">
     <h3>Select a User</h3>
-    <div class="card">
+    <div class="card-j">
         {{#each users}}
         <a href="/users/{{this.id}}/boards">
-            <div class="card-body" style="background-image: url({{this.image}});">
-                <span class="card-body-tooltip">{{this.name}}</span>
+            <div class="card-body-j" style="background-image: url({{this.image}});">
+                <span class="card-body-tooltip-j">{{this.name}}</span>
             </div>
         </a>
 
@@ -14,12 +14,12 @@
     </div>
     <p>Don't have one?</p>
     <div>
-        <button class="btn-create" onclick="openForm()">Create User</button>
+        <button class="btn-create-j" onclick="openForm()">Create User</button>
     </div>
 </div>
 
-<div class="create-user-form" id="createUser">
-    <form action="/users/create" method="POST" class="create-user-container">
+<div class="create-user-form-j" id="createUser">
+    <form action="/users/create" method="POST" class="create-user-container-j">
         <h4>Create New User</h4>
 
         <label><br>Name:<br></label>
@@ -28,8 +28,8 @@
         <lavel><br>Avatar:<br></lavel>
         <input type="url" placeholder="Avatar Url" name="image" required>
 
-        <button type="submit" class="btn">Create User</button>
-        <button type="button" onclick="closeForm()" class="btn cancel">Cancel</button>
+        <button type="submit" class="btn-j">Create User</button>
+        <button type="button" onclick="closeForm()" class="btn-j">Cancel</button>
     </form>
 </div>
 
