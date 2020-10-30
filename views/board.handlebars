@@ -1,17 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
- <img class="logo" src="/images/star.jpg" width="35" height="35" alt="Logo">
- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
- <span class="navbar-toggler-icon"></span>
- </button>
- 
- <div class="collapse navbar-collapse" id="navbarSupportedContent">
- <ul class="navbar-nav mr-auto">
- <li class="nav-item active">
- <a class="nav-link text-right ml-3" href="/users/{{user.id}}/boards">All Boards <span class="sr-only">(current)</span></a>
- </li>
- </ul>
- <a href="/user-profile"><img class="avatar-nav-k float-right" src={{user.image}} width="35" height="35" alt=""></a>
- </div>
+<img class="logo" src="/images/star.jpg" width="35" height="35" alt="Logo">
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav mr-auto">
+<li class="nav-item active">
+<a class="nav-link text-right ml-3" href="/users/{{user.id}}/boards">All Boards <span class="sr-only">(current)</span></a>
+</li>
+</ul>
+<a href="/users/{{user.id}}/profilepage"><img class="avatar-nav-k float-right" src={{user.image}} width="35" height="35" alt=""></a>
+</div>
 </nav>
 
 <main>
