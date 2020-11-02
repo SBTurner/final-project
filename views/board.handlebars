@@ -24,7 +24,7 @@
     <p id="board-title-k">{{board.title}}</p>
     <div class="avatars-group-k d-flex justify-content-center">
       {{#each tasks}}
-      <img class="avatar-nav-k" src="{{this.User.image}}">
+      <img class="avatar-nav-k" id="Avatar{{this.User.id}}" src="{{this.User.image}}">
       {{/each}}
     </div>
 
@@ -259,5 +259,9 @@ function drop(event) {
   }
   fetch(`/users/${taskId}/updatetask`, postRequest)
 }
+
+$('*[id*=Avatar]').each(function() {
+$('[id="' + this.id + '"]:gt(0)').remove();
+})
 
 </script>
