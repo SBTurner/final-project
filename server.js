@@ -3,20 +3,36 @@ const Handlebars = require("handlebars")
 const expressHandlebars = require("express-handlebars")
 const { allowInsecurePrototypeAccess } = require("@handlebars/allow-prototype-access")
 
-
 const { Board, Task, User, db } = require("./models/models")
 const { request } = require("express")
 
 const app = express()
 
-const handlebars = expressHandlebars({
+// const handlebars = expressHandlebars({
+//     handlebars: allowInsecurePrototypeAccess(Handlebars)
+// })
+
+// app.use(express.static('public')) //this is a folder name that you will save your html etc files in. 
+// app.engine('handlebars', handlebars)
+// app.set("view engine", "handlebars")
+// //Insert congiguration for handling form POST requests:
+// app.use(express.urlencoded({ extended: true }))
+// app.use(express.json())
+
+
+//Custom handlebars
+const hbs = expressHandlebars.create({
+    helpers: {
+        taskAvatar: function () {
+            
+        }
+    }, 
     handlebars: allowInsecurePrototypeAccess(Handlebars)
 })
 
-app.use(express.static('public')) //this is a folder name that you will save your html etc files in. 
-app.engine('handlebars', handlebars)
-app.set("view engine", "handlebars")
-//Insert congiguration for handling form POST requests:
+app.use(express.static('public'))
+app.engine('handlebars', hbs.engine)
+app.set('view engine', 'handlebars')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
@@ -86,7 +102,8 @@ app.get('/users/:user_id/boards/:board_id', async (req, res) => {
         include: 'tasks',
         nest: true
     })
-    const tasks = await board.getTasks()
+    const tasks = await board.getTasks({include: {model: User}})
+    console.log(tasks)
     const user = await User.findByPk(req.params.user_id)
     res.render('board', { board, user, users, tasks })
 })

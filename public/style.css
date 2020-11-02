@@ -21,20 +21,23 @@ a, a:link, a:active, a:visited {
 }
 
 .main-board-k {
-    margin-top: 4rem;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+    background-color: #F6F3F4;
+    border: solid #ded3d7;
+    border-radius: 1rem;
 }
 
 .card-todo-k {
-    background-color: #b8e0b9;
+    background-color: #cbe7cb;
 }
 
-.card-progress-k,
-.btn-edit-k {
-    background-color: #f4dfa4;
+.card-progress-k {
+    background-color: #f6e7bc;
 }
 
 .card-done-k {
-    background-color: #f3baa5;
+    background-color: #f6cbbc;
 }
 
 .c-text-k {
@@ -49,6 +52,7 @@ a, a:link, a:active, a:visited {
     font-size: 2rem;
     text-align: center;
     margin-bottom: 1rem;
+    margin-top: 2rem;
 }
 
 .card-board-k {
@@ -60,11 +64,6 @@ a, a:link, a:active, a:visited {
     font-weight: 400;
 }
 
-i {
-    color: #737373;
-    cursor: pointer;
-}
-
 .avatar-k {
     width: 1.5rem;
     height: 1.5rem;
@@ -73,8 +72,7 @@ i {
 
 .avatars-group-k {
     text-align: center;
-    margin-bottom: 3rem;
-    ;
+    margin-bottom: 2rem;
 }
 
 .avatars-group-k>img {
@@ -94,25 +92,23 @@ i {
     margin-top: 3rem;
 }
 
-.btn-add-k,
-.back-k,
-.btn-edit-k {
+.btn-k {
     border-radius: 1.3rem;
     box-shadow: 3px 3px 5px #737373;
+    background-color: #5d495488;
+}
+.btn-k:hover {
+    background-color: #6c757d;
+    color: #fcfcfc
 }
 
-.btn-add-k,
-.back-k {
-    background-color: #b8e0b9;
-}
-
-.back-k {
-    background-color: rgb(253, 135, 114);
+.btn-bottom-k {
     margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .btn-edit-k {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .form-popup-k {
@@ -124,7 +120,7 @@ i {
     z-index: 99 !important;
 }
 
-#delete-k {
+#delete-task, #delete-board {
     min-height: 14rem;
     
 }
@@ -350,7 +346,7 @@ h4 {
 /*---Mobile---*/
 
 @media screen and (max-width: 767px) {
-    .card-k {
+    .card-board-k {
         margin-top: 1rem;
     }
     .avatars-group-k {
@@ -359,10 +355,6 @@ h4 {
     .cards-row-k {
         margin-top: 1rem;
         margin-bottom: 3rem;
-    }
-    .back-k {
-        margin-top: 0rem;
-        margin-bottom: 2rem;
     }
 }
 
@@ -373,7 +365,3 @@ h4 {
 
 /*---Ipad Pro---*/
 @media screen and (min-width: 1024px) and (max-width: 1366px) {}
-
-
-
-
