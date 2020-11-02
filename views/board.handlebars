@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <img class="logo" src="/images/star.jpg" width="35" height="35" alt="Logo">
+  <a href="/">
+    <img class="logo" src="/images/star.jpg" width="35" height="35" alt="Logo">
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -46,7 +48,7 @@
 
             {{!---Edit Task Pop Up Card---}}
             <div id="edit-task-{{this.id}}" class="form-popup-k col-sm-4">
-              <div class="card card-board-k">
+              <div class="card card-board-k card-popup">
                 <div class="card-header card-header-k">Edit Task</div>
                 <div class="card-body">
                   <form action="/users/{{../user.id}}/boards/{{this.BoardId}}/tasks/{{this.id}}/edit" method="POST">
@@ -83,7 +85,7 @@
 
             {{!---Delete Task Pop Up Card---}}
             <div id="delete-task-{{this.id}}" class="form-popup-k col-sm-4">
-              <div class="card">
+              <div class="card card-popup">
                 <div class="card-body">
                   <form>
                     <div class="form-group">
@@ -150,7 +152,7 @@
 
     {{!---Add Task Pop Up Card---}}
     <div id="add-task" class="form-popup-k col-sm-4">
-      <div class="card card-board-k">
+      <div class="card card-board-k card-popup">
         <div class="card-header card-header-k">Add Task</div>
         <div class="card-body">
           <form action="/users/{{user.id}}/boards/{{board.id}}/tasks/create" method="POST">
@@ -178,7 +180,7 @@
 
     {{!---Delete Board Pop Up Card---}}
     <div id="delete-board" class="form-popup-k col-sm-4">
-      <div class="card">
+      <div class="card card-popup">
         <div class="card-body">
           <form>
             <div class="form-group">
