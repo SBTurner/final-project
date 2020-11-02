@@ -6,11 +6,16 @@
 .navbar{
     background-color: #67515D
    }
+
+a, a:link, a:active, a:visited {
+    color: inherit;
+    text-decoration: none;
+}  
 .nav-link, .nav-link:visited{
     color: white;
     font-size: 1.5em;
-   }
-
+}
+ 
 .body {
     font-family: 'Lato', sans-serif;
 }
@@ -113,10 +118,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 99 !important;
-  }
+
+}
+
+
 
 #delete-task, #delete-board {
     min-height: 14rem;
+
 }
 
 .navbar {
@@ -308,19 +317,6 @@ h4 {
     border-radius: 20px;
 }
    
-.carousel-indicators .active-s{
-    background-color: darkgray;
-}
-
-.carousel-control-next-icon,
-.carousel-control-prev-icon {
-    filter: invert(1);
-    opacity: 0.5;
-}
-
-.carousel-item {
-    align-items: center;
-}
 
 @media screen and (min-width: 40em) {
     .select-user-form-j {
@@ -371,4 +367,6 @@ h4 {
 
 
 /*---Ipad Pro---*/
+
 @media screen and (min-width: 1024px) and (max-width: 1366px) {}
+
