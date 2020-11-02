@@ -8,16 +8,20 @@
     background-color: #67515D
 }
 
-
-a, a:link, a:active, a:visited {
+a,
+a:link,
+a:active,
+a:visited {
     color: inherit;
     text-decoration: none;
-}  
-.nav-link, .nav-link:visited{
+}
+
+.nav-link,
+.nav-link:visited {
     color: white;
     font-size: 1.5em;
 }
- 
+
 .body {
     font-family: 'Lato', sans-serif;
 }
@@ -44,7 +48,7 @@ a, a:link, a:active, a:visited {
 
 .c-text-k {
     border: 1px solid #999999;
-    margin: .5rem;
+    margin-top: .5rem;
     padding: .5rem;
     border-radius: .5rem;
     background-color: #f8f9fa;
@@ -99,6 +103,7 @@ a, a:link, a:active, a:visited {
     box-shadow: 3px 3px 5px #737373;
     background-color: #5d495488;
 }
+
 .btn-k:hover {
     background-color: #6c757d;
     color: #fcfcfc
@@ -124,11 +129,12 @@ a, a:link, a:active, a:visited {
 .card-popup {
     border: 3px solid slategray;
     border-radius: 1rem;
+
 }
 
-#delete-task, #delete-board {
+#delete-task,
+#delete-board {
     min-height: 14rem;
-
 }
 
 .navbar {
@@ -334,7 +340,6 @@ h4 {
     border-radius: 20px;
 }
 
-
 @media screen and (min-width: 40em) {
     .select-user-form-j {
         width: 60vw;
@@ -385,4 +390,5 @@ h4 {
 
 
 /*---Ipad Pro---*/
+
 @media screen and (min-width: 1024px) and (max-width: 1366px) {}
