@@ -1,11 +1,13 @@
 /* Individual board page style */
 
-.logo{
+.logo {
     border-radius: 5px;
-   }
-.navbar{
+}
+
+.navbar {
     background-color: #67515D
-   }
+}
+
 
 a, a:link, a:active, a:visited {
     color: inherit;
@@ -131,16 +133,18 @@ a, a:link, a:active, a:visited {
 .navbar {
     background-color: #67515D
 }
-.nav-link, .nav-link:visited{
+
+.nav-link,
+.nav-link:visited {
     color: white;
     font-size: 1.5em;
 }
 
-.container-fluid-s{
-    padding-right:0;
-    padding-left:0;
-    margin-right:auto;
-    margin-left:auto
+.container-fluid-s {
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: auto;
+    margin-left: auto
 }
 
 .bg-img-j {
@@ -162,9 +166,9 @@ h4 {
     padding: 20px;
 }
 
-/* p {
+.p-landingpage {
     text-align: center;
-} */
+}
 
 .card-j {
     background-color: transparent;
@@ -178,9 +182,8 @@ h4 {
 .card-board-s {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: 1;  
+    grid-template-rows: 1;
     border: none;
-
 }
 
 .card-board-body-s,
@@ -225,7 +228,8 @@ h4 {
     margin: auto;
     padding: 30px;
 }
-.card-board-image-s{
+
+.card-board-image-s {
     border-radius: 20px;
 }
 
@@ -312,11 +316,11 @@ h4 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin:  auto;
+    margin: auto;
     background-color: #5d495488;
     border-radius: 20px;
 }
-   
+
 
 @media screen and (min-width: 40em) {
     .select-user-form-j {
@@ -363,6 +367,7 @@ h4 {
 
 
 /*---Tablet---*/
+
 @media screen and (min-width: 768px) and (max-width: 1023px) {}
 
 
