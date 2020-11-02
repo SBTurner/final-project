@@ -30,7 +30,7 @@
       <div class="card-todo-k card-body">
         {{#each tasks}}
         <div>
-        <p class="c-text-k card-text"><img class="avatar-k" src="{{../user.image}}">&nbsp; {{this.desc}} &nbsp; 
+        <p class="c-text-k card-text"><img class="avatar-k" src="{{taskAvatar this ../user}}">&nbsp; {{this.desc}} &nbsp; 
         <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
         <i onclick="openTaskDelete()"class="fas fa-trash-alt"></i></p>
         </div>
