@@ -37,6 +37,25 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
 
+//---Custom handlebars
+// const hbs = expressHandlebars.create({
+//     helpers: {
+//         taskAvatar: function (task, users) {
+//             if(task.UserId) {
+//                 return users.image;
+//             }
+//         }
+//     }, 
+//     handlebars: allowInsecurePrototypeAccess(Handlebars)
+// })
+
+// app.use(express.static('public'))
+// app.engine('handlebars', hbs.engine)
+// app.set('view engine', 'handlebars')
+// app.use(express.urlencoded({ extended: true }))
+// app.use(express.json())
+
+
 //-----ROUTES-------
 // Render landing page
 app.get(['/'], async (req, res) => {
@@ -131,7 +150,8 @@ app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
     const board = await Board.findByPk(req.params.board_id)
     const user = await User.findByPk(req.params.user_id)
     const selectUser = await User.findByPk(req.body.selectpicker)
-    await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+    const task = await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+    console.log(task)
     res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 //Update tasks
@@ -140,7 +160,7 @@ app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async (req, r
     const board = await Board.findByPk(req.params.board_id)
     const user = await User.findByPk(req.params.user_id)
     await task.update(req.body)
-    console.log(task)
+    //console.log(task)
     res.redirect(`/users/${user.id}/boards/${board.id}`)
 })
 //Delete tasks
