@@ -23,13 +23,15 @@ const app = express()
 //Custom handlebars
 const hbs = expressHandlebars.create({
     helpers: {
-        taskAvatar: function () {
-            
+        taskAvatar: function() {
+
         }
-    }, 
+    },
     handlebars: allowInsecurePrototypeAccess(Handlebars)
 })
-
+hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
 app.use(express.static('public'))
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
@@ -58,125 +60,129 @@ app.use(express.json())
 
 //-----ROUTES-------
 // Render landing page
-app.get(['/'], async (req, res) => {
-    const users = await User.findAll({
-        include: [{ model: Task, as: 'tasks' }],
-        nest: true
+app.get(['/'], async(req, res) => {
+        const users = await User.findAll({
+            include: [{ model: Task, as: 'tasks' }],
+            nest: true
+        })
+        res.render("home", { users: users })
     })
-    res.render("home", { users: users })
-})
-// Create user
-app.post(['/users/create'], async (req, res) => {
-    const user = await User.create({ name: req.body.name, image: req.body.image })
-    res.redirect(`/users/${user.id}/boards`)
-})
-//  Render profile page
-app.get(['/users/:user_id/profilepage'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id)
-    const tasks = await Task.findAll({ where: { UserId: req.params.user_id } })
-    res.render("user-profile", { user: user, tasks: tasks })
-})
-// Update user
-app.post(['/users/:user_id/profilepage/edit'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id)
-    await user.update(req.body)
-    res.redirect(`/users/${user.id}/boards`)
-})
-// Delete user
-app.get(['/users/:user_id/profilepage/delete'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id)
-    await user.destroy()
-    res.redirect('/')
-})
-// Render boards page
-app.get(['/users/:user_id/boards'], async (req, res) => {
-    const boards = await Board.findAll({
-        include: 'tasks',
-        nest: true
+    // Create user
+app.post(['/users/create'], async(req, res) => {
+        const user = await User.create({ name: req.body.name, image: req.body.image })
+        res.redirect(`/users/${user.id}/boards`)
     })
-    const users = await User.findAll({
-        include: 'tasks',
-        nest: true
+    //  Render profile page
+app.get(['/users/:user_id/profilepage'], async(req, res) => {
+        const user = await User.findByPk(req.params.user_id)
+        const tasks = await Task.findAll({ where: { UserId: req.params.user_id } })
+        res.render("user-profile", { user: user, tasks: tasks })
     })
-    // get array of user Ids per board
-    const avatars = []
-    for (i = 0; i < boards.length; i++) {
-        const brd_all_users = []
-        for (j = 0; j < boards[i].tasks.length; j++) {
-            brd_all_users.push(boards[i].tasks[j].UserId)
+    // Update user
+app.post(['/users/:user_id/profilepage/edit'], async(req, res) => {
+        const user = await User.findByPk(req.params.user_id)
+        await user.update(req.body)
+        res.redirect(`/users/${user.id}/boards`)
+    })
+    // Delete user
+app.get(['/users/:user_id/profilepage/delete'], async(req, res) => {
+        const user = await User.findByPk(req.params.user_id)
+        await user.destroy()
+        res.redirect('/')
+    })
+    // Render boards page
+app.get(['/users/:user_id/boards'], async(req, res) => {
+        const boards = await Board.findAll({
+            include: 'tasks',
+            nest: true
+        })
+        const users = await User.findAll({
+                include: 'tasks',
+                nest: true
+            })
+            // get array of user Ids per board
+        const avatars = []
+        for (i = 0; i < boards.length; i++) {
+            const brd_all_users = []
+            for (j = 0; j < boards[i].tasks.length; j++) {
+                brd_all_users.push(boards[i].tasks[j].UserId)
+            }
+            if (j == boards[i].tasks.length) {
+                const brd_unique_users = brd_all_users.filter((val, idx, self) => { return self.indexOf(val) === idx })
+                avatars.push(brd_unique_users)
+            }
         }
-        if (j == boards[i].tasks.length) {
-            const brd_unique_users = brd_all_users.filter((val, idx, self) => { return self.indexOf(val) === idx })
-            avatars.push(brd_unique_users)
-        }
-    }
-    //console.log(avatars)
-    const user = await User.findByPk(req.params.user_id)
-    res.render("all-boards", { users, boards, user, avatars })
-})
-//Render individual board page
-app.get('/users/:user_id/boards/:board_id', async (req, res) => {
-    const board = await Board.findByPk(req.params.board_id)
-    const users = await User.findAll({
-        include: 'tasks',
-        nest: true
+        //console.log(avatars)
+        const user = await User.findByPk(req.params.user_id)
+        res.render("all-boards", { users, boards, user, avatars })
     })
-    const tasks = await board.getTasks({include: {model: User}})
-    console.log(tasks)
-    const user = await User.findByPk(req.params.user_id)
-    res.render('board', { board, user, users, tasks })
-})
-// Create board
-app.post(['/users/:user_id/boards/create'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id) 
-    const board = await Board.create({ title: req.body.title })
-    res.redirect(`/users/${user.id}/boards`)
-})
-// Update board
-app.post(['/users/:user_id/boards/:board_id/edit'], async (req, res) => {
-    const board = await Board.findByPk(req.params.board_id)
-    await board.update(req.body)
-    res.redirect(`/board/${board.id}`)
-})
-// Delete board
-app.get(['/users/:user_id/boards/:board_id/delete'], async (req, res) => {
-    const user = await User.findByPk(req.params.user_id)
-    const board = await Board.findByPk(req.params.board_id)
-    await board.destroy()
-    res.redirect(`/users/${user.id}/boards`)
-})
-//Create task
-app.post('/users/:user_id/boards/:board_id/tasks/create', async (req, res) => {
-    const board = await Board.findByPk(req.params.board_id)
-    const user = await User.findByPk(req.params.user_id)
-    const selectUser = await User.findByPk(req.body.selectpicker)
-    const task = await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
-    console.log(task)
-    res.redirect(`/users/${user.id}/boards/${board.id}`)
-})
-//Update tasks
-app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async (req, res) => {
-    const task = await Task.findByPk(req.params.task_id)
-    const board = await Board.findByPk(req.params.board_id)
-    const user = await User.findByPk(req.params.user_id)
-    await task.update(req.body)
-    //console.log(task)
-    res.redirect(`/users/${user.id}/boards/${board.id}`)
-})
-//Delete tasks
-app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async (req, res) => {
-    const board = await Board.findByPk(req.params.board_id)
-    const user = await User.findByPk(req.params.user_id)
-    const task = await Task.findByPk(req.params.task_id)
-    await task.destroy()
-    res.redirect(`/users/${user.id}/boards/${board.id}`)
-})
+    //Render individual board page
+app.get('/users/:user_id/boards/:board_id', async(req, res) => {
+        const board = await Board.findByPk(req.params.board_id)
+        const users = await User.findAll({
+            include: 'tasks',
+            nest: true
+        })
+        const tasks = await board.getTasks({ include: { model: User } })
+        console.log(tasks)
+        const user = await User.findByPk(req.params.user_id)
+        res.render('board', { board, user, users, tasks })
+    })
+    // Create board
+app.post(['/users/:user_id/boards/create'], async(req, res) => {
+        const user = await User.findByPk(req.params.user_id)
+        const board = await Board.create({ title: req.body.title })
+        res.redirect(`/users/${user.id}/boards`)
+    })
+    // Update board
+app.post(['/users/:user_id/boards/:board_id/edit'], async(req, res) => {
+        const board = await Board.findByPk(req.params.board_id)
+        await board.update(req.body)
+        res.redirect(`/board/${board.id}`)
+    })
+    // Delete board
+app.get(['/users/:user_id/boards/:board_id/delete'], async(req, res) => {
+        const user = await User.findByPk(req.params.user_id)
+        const board = await Board.findByPk(req.params.board_id)
+        await board.destroy()
+        res.redirect(`/users/${user.id}/boards`)
+    })
+    //Create task
+app.post('/users/:user_id/boards/:board_id/tasks/create', async(req, res) => {
+        const board = await Board.findByPk(req.params.board_id)
+        const user = await User.findByPk(req.params.user_id)
+        const selectUser = await User.findByPk(req.body.selectpicker)
+        const task = await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+        res.redirect(`/users/${user.id}/boards/${board.id}`)
+    })
+    //Update tasks
+app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async(req, res) => {
+        const task = await Task.findByPk(req.params.task_id)
+        const board = await Board.findByPk(req.params.board_id)
+        const user = await User.findByPk(req.params.user_id)
+        await task.update(req.body)
 
+        res.redirect(`/users/${user.id}/boards/${board.id}`)
+    })
+    //Delete tasks
+app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async(req, res) => {
+        const board = await Board.findByPk(req.params.board_id)
+        const user = await User.findByPk(req.params.user_id)
+        const task = await Task.findByPk(req.params.task_id)
+        await task.destroy()
+        res.redirect(`/users/${user.id}/boards/${board.id}`)
+    })
+    //Update status
+app.post('/users/:task_id/updatetask', async(req, res) => {
+    const task = await Task.findByPk(req.params.task_id)
+    task.update({ status: req.body.status })
+    res.send()
+})
 
 
 //this is the point where the server is initialised. 
 app.listen(3000, () => {
-    db.sync().then(async () => {
+    db.sync().then(async() => {
         const boards = await Board.findAll()
 
         if (boards.length > 0) {
