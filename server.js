@@ -23,8 +23,8 @@ const app = express()
 //Custom handlebars
 const hbs = expressHandlebars.create({
     helpers: {
-        taskAvatar: function () {
-            
+        uniqueUsers: function () {
+
         }
     }, 
     handlebars: allowInsecurePrototypeAccess(Handlebars)
@@ -36,24 +36,6 @@ app.set('view engine', 'handlebars')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-
-//---Custom handlebars
-// const hbs = expressHandlebars.create({
-//     helpers: {
-//         taskAvatar: function (task, users) {
-//             if(task.UserId) {
-//                 return users.image;
-//             }
-//         }
-//     }, 
-//     handlebars: allowInsecurePrototypeAccess(Handlebars)
-// })
-
-// app.use(express.static('public'))
-// app.engine('handlebars', hbs.engine)
-// app.set('view engine', 'handlebars')
-// app.use(express.urlencoded({ extended: true }))
-// app.use(express.json())
 
 
 //-----ROUTES-------
@@ -122,7 +104,6 @@ app.get('/users/:user_id/boards/:board_id', async (req, res) => {
         nest: true
     })
     const tasks = await board.getTasks({include: {model: User}})
-    console.log(tasks)
     const user = await User.findByPk(req.params.user_id)
     res.render('board', { board, user, users, tasks })
 })

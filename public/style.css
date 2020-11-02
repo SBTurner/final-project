@@ -120,7 +120,10 @@ a, a:link, a:active, a:visited {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 99 !important;
-
+}
+.card-popup {
+    border: 3px solid slategray;
+    border-radius: 1rem;
 }
 
 #delete-task, #delete-board {
@@ -221,8 +224,8 @@ h4 {
     background-size: cover;
     height: 100%;
     width: 100%;
-    border-radius: 20px;
-    border: 1px solid lightgray;
+    border: solid #ded3d7;
+    border-radius: 1rem;
     margin: auto;
     padding: 30px;
 }
@@ -249,7 +252,6 @@ h4 {
     width: 80vw;
 }
 
-.create-board-form-s,
 .create-user-form-j {
     display: none;
     margin: auto;
@@ -263,6 +265,19 @@ h4 {
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.37);
     width: 80vw;
+}
+
+.create-board-form-s {
+    display: none;
+    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid slategray;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #fcfcfc;
 }
 
 .create-user-container-j {
