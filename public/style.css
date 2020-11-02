@@ -83,9 +83,9 @@ a:visited {
 
 .avatars-group-k>img {
     margin: .5rem;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 1rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
 }
 
 .avatar-nav-k {
@@ -126,10 +126,10 @@ a:visited {
     transform: translate(-50%, -50%);
     z-index: 99 !important;
 }
+
 .card-popup {
     border: 3px solid slategray;
     border-radius: 1rem;
-
 }
 
 #delete-task,
@@ -291,6 +291,7 @@ h4 {
 }
 
 .create-board-container-s input[type=text],
+.create-board-container-s input[type="url"],
 .create-user-container-j input[type=text],
 .create-user-container-j input[type="url"],
 .edit-user-container-j input[type=text],
@@ -338,6 +339,11 @@ h4 {
     margin: auto;
     background-color: #5d495488;
     border-radius: 20px;
+}
+
+.avatar-j {
+    border-radius: 50%;
+    margin: 0.2rem;
 }
 
 @media screen and (min-width: 40em) {

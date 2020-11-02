@@ -35,14 +35,18 @@
                             <div class="card-body card-board-body-s">
                                 <h3 class="card-title text-center">{{this.title}}</h3>
                                 <img class="card-img card-board-image-s"
-                                    src="https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
+                                    src="{{this.image}}">
                                 </img>
                                 <div class="card-subtitle">
                                     <h6 class="my-2 py-2 text-right">{{this.tasks.length}} tasks</h6>
-                                    <p class="my-2">Include avatars here!!!</p>
-                                    {{!-- {{#each ../avatars}}
-                                    <p>{{this}}</p>
-                                {{/each}} --}}
+                                     {{#each ../avatars}}
+                                        {{#ifEquals this.boardId ../id}}
+                                            {{#each users}}
+                                                <img class="avatar-j" src="{{.}}" width="40px" height="40px">
+                                            {{/each}}
+                                        {{/ifEquals}}
+                                     {{/each}}
+                                    
                             </div>
                         </div>
                     </div>
@@ -58,46 +62,15 @@
 </div>
 </div>
 
-
-<div class="container d-flex flex-column justify-center">
-    <div class="d-block d-sm-none" id="all-board-container-s">
-        <h2 class="text-center mt-4">Welcome {{user.name}}!</h2>
-        <div class="d-flex m-4 align-items-center">
-            <div class="row">
-                {{#each boards}}
-                <div class="col-tag col-lg-6 col-md-6 col-sm-12 p-2 text-center">
-                    <a href="/users/{{../user.id}}/boards/{{this.id}}">
-                        <div class="card card-board-s d-block" style="min-height: 20rem">
-                            <div class="card-body card-board-body-s">
-                                <h3 class="card-title text-center">{{this.title}}</h3>
-                                <img class="card-img card-board-image-s"
-                                    src="https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260">
-                                </img>
-                                <div class="card-subtitle">
-                                    <h6 class="my-2 py-2 text-right">{{this.tasks.length}} tasks</h6>
-                                    <p class="my-2">Include avatars here!!!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                {{/each}}
-            </div>
-        </div>
-
-        <button class="btn btn-j btn-secondary my-4 btn-add-board-s" onclick="createBoard()" type="button">Add
-            Board</button>
-
-    </div>
-</div>
-
-
 <div class="create-board-form-s" id="createBoard-s">
     <form action="/users/{{user.id}}/boards/create" method="POST" class="create-board-container-s">
         <h4>Create New Board</h4>
 
         <label><br>Title:<br></label>
         <input type="text" placeholder="Board Title" name="title" required>
+
+        <label><br>Project Picture:<br></label>
+        <input type="url" placeholder="Picture Url" name="image" required>
 
         <button type="submit" class="btn btn-j">Create Board</button>
         <button type="button" onclick="cancelBoard()" class="btn btn-j cancel">Cancel</button>
@@ -113,6 +86,7 @@
         document.getElementById("createBoard-s").style.display = "none";
         document.getElementById("all-board-container-s").style.display = "block";
     }
+
 
     // Carousel
         $('.toggle-all').on('click', function() {

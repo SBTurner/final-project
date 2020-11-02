@@ -18,7 +18,8 @@ class User extends Model {}
 //Initialise our classes:  Class.init({columns},{table})
 //Sequelize deals with foreign keys so you don't explicitly have to state as a field
 Board.init({
-    title: DataTypes.STRING
+    title: DataTypes.STRING,
+    image: DataTypes.STRING
 }, { sequelize: db })
 
 Task.init({
