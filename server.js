@@ -45,7 +45,7 @@ app.get(['/users/:user_id/profilepage'], async (req, res) => {
 app.post(['/users/:user_id/profilepage/edit'], async (req, res) => {
     const user = await User.findByPk(req.params.user_id)
     await user.update(req.body)
-    res.redirect(`/users/${user.id}/profilepage`)
+    res.redirect(`/users/${user.id}/boards`)
 })
 // Delete user
 app.get(['/users/:user_id/profilepage/delete'], async (req, res) => {
