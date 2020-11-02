@@ -123,8 +123,6 @@ a, a:link, a:active, a:visited {
 
 }
 
-
-
 #delete-task, #delete-board {
     min-height: 14rem;
 
@@ -372,6 +370,4 @@ h4 {
 
 
 /*---Ipad Pro---*/
-
 @media screen and (min-width: 1024px) and (max-width: 1366px) {}
-
