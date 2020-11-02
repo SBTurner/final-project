@@ -3,7 +3,6 @@ const Handlebars = require("handlebars")
 const expressHandlebars = require("express-handlebars")
 const { allowInsecurePrototypeAccess } = require("@handlebars/allow-prototype-access")
 
-
 const { Board, Task, User, db } = require("./models/models")
 const { request } = require("express")
 
@@ -19,6 +18,23 @@ app.set("view engine", "handlebars")
 //Insert congiguration for handling form POST requests:
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
+
+
+//---Custom handlebars
+// const hbs = expressHandlebars.create({
+//     helpers: {
+//         taskAvatar: function () {
+            
+//         }
+//     }, 
+//     handlebars: allowInsecurePrototypeAccess(Handlebars)
+// })
+
+// app.use(express.static('public'))
+// app.engine('handlebars', hbs.engine)
+// app.set('view engine', 'handlebars')
+// app.use(express.urlencoded({ extended: true }))
+// app.use(express.json())
 
 
 //-----ROUTES-------
