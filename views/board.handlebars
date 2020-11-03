@@ -37,7 +37,7 @@
             {{#each tasks}}
             {{#ifEquals this.status 0}}
             <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-              <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+              <p class="c-text-k card-text"><img id="TaskImage{{this.User.id}}" class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
                 <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
                 <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
             </div>
@@ -60,16 +60,23 @@
                       <label for="assign">Assign User</label>
                       <select name="selectpicker" class="form-control" id="assign">
                         {{#each ../users}}
-                        <option value="{{this.id}}">{{this.name}}</option>
+                          {{#ifEquals this.id ../this.User.id}} 
+                            <option selected="selected" value="{{this.id}}">{{this.name}}</option> 
+                              {{else}}
+                                <option value="{{this.id}}">{{this.name}}</option>
+                          {{/ifEquals}}
                         {{/each}}
+                        <option value="no">No User</option>
                       </select>
                     </div>
                     <div class="form-group">
                       <label for="move">Move to</label>
-                      <select class="form-control" id="move">
-                        <option>To Do</option>
-                        <option>In Progress</option>
-                        <option>Done</option>
+                      <select class="form-control" name="move" id="move">
+                        
+                        {{#ifEquals this.status 0}} <option selected="selected" value="0">To Do</option> {{else}} <option value="0">To Do</option> {{/ifEquals}}
+                        {{#ifEquals this.status 1}} <option selected="selected" value="1">In Progress</option> {{else}} <option value="1">In Progress</option> {{/ifEquals}}
+                        {{#ifEquals this.status 2}} <option selected="selected" value="2">Done</option> {{else}} <option value="2">Done</option> {{/ifEquals}}
+                        
                       </select>
                     </div>
                     <button type="submit" class="btn-k btn-edit-k btn"><i class="fas fa-check"></i>&nbsp;
@@ -103,7 +110,7 @@
               </div>
             </div>
 
-            {{/each}}
+            {{/each}} {{!--end {{each tasks}} loop --}}
           </div>
         </div>
       </div>
@@ -170,6 +177,7 @@
                 {{#each users}}
                 <option value="{{this.id}}">{{this.name}}</option>
                 {{/each}}
+                <option value="no">No User</option>
               </select>
             </div>
             <div class="d-flex justify-content-between align-items-center">
@@ -297,7 +305,11 @@ function drop(event) {
 $('*[id*=Avatar]').each(function() {
 $('[id="' + this.id + '"]:gt(0)').remove();
 })
-$(window).on('load', function() {
+
+$('#Avatar').hide()
+$('#TaskImage').css('visibility','hidden')
+
+$(window).on('load', function()  {
     $("#container").show();
 });
 
