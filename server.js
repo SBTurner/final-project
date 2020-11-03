@@ -191,7 +191,7 @@ app.post('/users/:task_id/updatetask', async(req, res) => {
 
 
 //this is the point where the server is initialised. 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     db.sync().then(async() => {
         const boards = await Board.findAll()
 
@@ -211,5 +211,5 @@ app.listen(3000, () => {
         await Task.create({ "desc": "Eat food", "status": 0, "BoardId": board2.id, UserId: sarah.id })
 
     }).catch(console.error)
-    console.log('port = ', 3000)
+    console.log('port = ', process.env.PORT)
 })

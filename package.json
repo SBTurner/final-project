@@ -4,8 +4,13 @@
   "description": "## Plant UML diagram <a href=\"url\"><img src=\"https://user-images.githubusercontent.com/72227066/97438646-f7acae80-191c-11eb-87fb-9796b55fcca6.png\" align=\"center\" height=\"500\" ></a> ## Wireframes https://docs.google.com/presentation/d/1EaqCfrmcGIwL6P7UwRA8rL7mRYG65F3uQh0EtPkdQQs/edit?usp=sharing",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "dev": "NODE_ENV=dev PORT=3000 nodemon server.js",
+    "test": "PORT=3001 NODE_ENV=test jest --watchAll"
+  },
+  "engines": {
+    "node": "14",
+    "npm": "6"
   },
   "repository": {
     "type": "git",
@@ -24,6 +29,7 @@
     "express-handlebars": "^5.2.0",
     "handlebars": "^4.7.6",
     "nodemon": "^2.0.6",
+    "pg": "^8.4.2",
     "sequelize": "^6.3.5",
     "sqlite3": "^5.0.0"
   },
