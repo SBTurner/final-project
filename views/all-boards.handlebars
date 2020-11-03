@@ -19,7 +19,7 @@
 </nav>
 
 
-
+{{!-- Show on Desktop --}}
 <div class="container d-flex flex-column justify-center">
     <div class="d-none d-sm-block" id="all-board-container-s">
         <h2 class="text-center mt-4">Welcome {{user.name}}!</h2>
@@ -29,7 +29,7 @@
             <div class="p-3 control"><i class="fa fa-2x text-muted fa-chevron-left"></i></div>
             <div class="row flex-nowrap justify-content-tenter" style="overflow: hidden;">
                 {{#each boards}}
-                <div class="col-tag col-lg-6 col-md-6 col-sm-12 p-3 text-center">
+                <div class="col-tag col-lg-6 col-md-12 col-sm-12 p-3 text-center">
                     <a href="/users/{{../user.id}}/boards/{{this.id}}">
                         <div class="card card-board-s d-block m-2" style="min-height: 20rem">
                             <div class="card-body card-board-body-s">
@@ -38,7 +38,7 @@
                                     src="{{this.image}}">
                                 </img>
                                 <div class="card-subtitle">
-                                    <h6 class="my-2 py-2 text-right">{{this.tasks.length}} tasks</h6>
+                                    <h6 class="my-2 py-2 text-center">{{this.tasks.length}} tasks</h6>
                                      {{#each ../avatars}}
                                         {{#ifEquals this.boardId ../id}}
                                             {{#each users}}
@@ -60,6 +60,7 @@
 
 </div>
 </div>
+{{!-- Show on Mobile --}}
 <div class="container d-flex flex-column justify-center">
     <div class="d-block d-sm-none" id="all-board-container-s">
         <h2 class="text-center mt-4">Welcome {{user.name}}!</h2>
@@ -74,7 +75,7 @@
                                 <img class="card-img card-board-image-s"
                                     src="{{this.image}}"> 
                                 <div class="card-subtitle">
-                                    <h6 class="my-2 py-2 text-right">{{this.tasks.length}} tasks</h6>
+                                    <h6 class="my-2 py-2 text-center">{{this.tasks.length}} tasks</h6>
                                     {{#each ../avatars}}
                                         {{#ifEquals this.boardId ../id}}
                                             {{#each users}}

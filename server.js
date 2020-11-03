@@ -23,8 +23,8 @@ const app = express()
 //Custom handlebars
 const hbs = expressHandlebars.create({
     helpers: {
-        taskAvatar: function() {
-
+        removeUser: function() {
+            
         }
     },
     handlebars: allowInsecurePrototypeAccess(Handlebars)
@@ -113,7 +113,6 @@ app.get(['/users/:user_id/boards'], async(req, res) => {
                 users: users
             }
         })
-
         const avatars = await Promise.all(avatarsArray)
         res.render("all-boards", { users, boards, user, avatars })
     })
@@ -152,8 +151,13 @@ app.get(['/users/:user_id/boards/:board_id/delete'], async(req, res) => {
 app.post('/users/:user_id/boards/:board_id/tasks/create', async(req, res) => {
         const board = await Board.findByPk(req.params.board_id)
         const user = await User.findByPk(req.params.user_id)
-        const selectUser = await User.findByPk(req.body.selectpicker)
-        await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+        const selectUser = {}
+        if(req.body.selectpicker == "no") {
+            await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: null })
+        } else {
+            selectUser = await User.findByPk(req.body.selectpicker)
+            await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+        }
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     //Update tasks
@@ -161,8 +165,13 @@ app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async(req, re
         const task = await Task.findByPk(req.params.task_id)
         const board = await Board.findByPk(req.params.board_id)
         const user = await User.findByPk(req.params.user_id)
-        const selectUser = await User.findByPk(req.body.selectpicker)
-        await task.update({ desc: req.body.desc, status: req.body.move, BoardId: board.id, UserId: selectUser.id })
+        if(req.body.selectpicker == "no") {
+            await task.update({ desc: req.body.desc, status: req.body.move, BoardId: board.id, UserId: null})
+        } else {
+            const selectUser = await User.findByPk(req.body.selectpicker)
+            await task.update({ desc: req.body.desc, status: req.body.move, BoardId: board.id, UserId: selectUser.id })
+        }
+        await console.log(task)
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     //Delete tasks
@@ -176,7 +185,7 @@ app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async(req, r
     //Update status
 app.post('/users/:task_id/updatetask', async(req, res) => {
     const task = await Task.findByPk(req.params.task_id)
-    task.update({ status: req.body.status })
+    await task.update({ status: req.body.status })
     res.send()
 })
 
