@@ -18,9 +18,11 @@
   </div>
 </nav>
 
+<div class="container">
 <div class="userprofile-img-j" style="background-image: url({{user.image}});">
 </div>
-<div class="edit-user-form-j" id="editUser">
+<div class="d-flex justify-content-center">
+<div class="main-board-k edit-user-form-j" id="editUser">
   <form action="/users/{{user.id}}/profilepage/edit" method="POST" class="edit-user-container-j">
     <label><br>Name:<br></label>
     <input type="text" placeholder="Username" name="name" value="{{user.name}}" required>
@@ -40,6 +42,8 @@
       <button type="button" class="btn-j">Log out</button>
     </a>
   </form>
+</div>
+</div>
 </div>
 
 <script>
