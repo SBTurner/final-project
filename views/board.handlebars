@@ -66,10 +66,10 @@
                     </div>
                     <div class="form-group">
                       <label for="move">Move to</label>
-                      <select class="form-control" id="move">
-                        <option>To Do</option>
-                        <option>In Progress</option>
-                        <option>Done</option>
+                      <select class="form-control" name="move" id="move">
+                        <option value="0">To Do</option>
+                        <option value="1">In Progress</option>
+                        <option value="2">Done</option>
                       </select>
                     </div>
                     <button type="submit" class="btn-k btn-edit-k btn"><i class="fas fa-check"></i>&nbsp;
@@ -143,7 +143,7 @@
       </div>
     </div>
 
-    <div class="btn-bottom-k d-flex justify-content-between align-items-center">
+    <div class="btn-bottom-k d-flex flex-wrap justify-content-center">
       <button onclick="openAddTask()" type="button" class=" btn-k btn"><i class="fas fa-plus"></i>&nbsp; Add
         Task</button>
       <button onclick="openBoardEdit()" type="button" class="btn btn-k back-k"><i class="fas fa-check"></i>&nbsp;
