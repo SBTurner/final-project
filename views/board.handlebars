@@ -198,7 +198,7 @@
     </div>
 
   </div>
-</main>
+  </main>
 
 
 
@@ -240,12 +240,12 @@ function dragStart(event, taskId) {
 }
 
 function allowDrop(event) {
-   event.stopPropagation()
+  
   event.preventDefault();
 }
 
 function drop(event) {
-  event.stopPropagation()
+  
   event.preventDefault();
   var data = event.dataTransfer.getData("Text");
   var taskId = event.dataTransfer.getData("TaskId");
