@@ -107,7 +107,9 @@ app.get(['/users/:user_id/boards'], async(req, res) => {
             const users = {};
             const board = await Board.findByPk(b.id)
             const tasks = await board.getTasks({ include: { model: User } })
-            tasks.map((task) => (users[task.User.id] = task.User.image))
+            tasks
+            .filter(task => task.User)
+            .map((task) => (users[task.User.id] = task.User.image))
             return {
                 boardId: b.id,
                 users: users
@@ -151,11 +153,10 @@ app.get(['/users/:user_id/boards/:board_id/delete'], async(req, res) => {
 app.post('/users/:user_id/boards/:board_id/tasks/create', async(req, res) => {
         const board = await Board.findByPk(req.params.board_id)
         const user = await User.findByPk(req.params.user_id)
-        const selectUser = {}
         if(req.body.selectpicker == "no") {
             await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: null })
         } else {
-            selectUser = await User.findByPk(req.body.selectpicker)
+            const selectUser = await User.findByPk(req.body.selectpicker)
             await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
         }
         res.redirect(`/users/${user.id}/boards/${board.id}`)
@@ -171,7 +172,6 @@ app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async(req, re
             const selectUser = await User.findByPk(req.body.selectpicker)
             await task.update({ desc: req.body.desc, status: req.body.move, BoardId: board.id, UserId: selectUser.id })
         }
-        await console.log(task)
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     //Delete tasks
