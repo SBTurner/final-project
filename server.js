@@ -23,8 +23,8 @@ const app = express()
 //Custom handlebars
 const hbs = expressHandlebars.create({
     helpers: {
-        taskAvatar: function() {
-
+        removeUser: function() {
+            
         }
     },
     handlebars: allowInsecurePrototypeAccess(Handlebars)

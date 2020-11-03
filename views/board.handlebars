@@ -76,7 +76,7 @@
                         {{#ifEquals this.status 0}} <option selected="selected" value="0">To Do</option> {{else}} <option value="0">To Do</option> {{/ifEquals}}
                         {{#ifEquals this.status 1}} <option selected="selected" value="1">In Progress</option> {{else}} <option value="1">In Progress</option> {{/ifEquals}}
                         {{#ifEquals this.status 2}} <option selected="selected" value="2">Done</option> {{else}} <option value="2">Done</option> {{/ifEquals}}
-                        
+                 
                       </select>
                     </div>
                     <button type="submit" class="btn-k btn-edit-k btn"><i class="fas fa-check"></i>&nbsp;
@@ -150,7 +150,7 @@
       </div>
     </div>
 
-    <div class="btn-bottom-k d-flex justify-content-between align-items-center">
+    <div class="btn-bottom-k d-flex flex-wrap justify-content-center">
       <button onclick="openAddTask()" type="button" class=" btn-k btn"><i class="fas fa-plus"></i>&nbsp; Add
         Task</button>
       <button onclick="openBoardEdit()" type="button" class="btn btn-k back-k"><i class="fas fa-check"></i>&nbsp;
