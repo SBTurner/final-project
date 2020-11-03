@@ -35,15 +35,15 @@
           <div class="card-header card-header-k">TO DO</div>
           <div class="card-todo-k card-body" id="0">
             {{#each tasks}}
-              {{#ifEquals this.status 0}}
-                <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-                  <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
-                    <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
-                    <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
-                </div>
-              {{/ifEquals}}
+            {{#ifEquals this.status 0}}
+            <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
+              <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+                <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
+                <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
+            </div>
+            {{/ifEquals}}
 
-            
+
 
 
             {{!---Edit Task Pop Up Card---}}
@@ -60,7 +60,7 @@
                       <label for="assign">Assign User</label>
                       <select name="selectpicker" class="form-control" id="assign">
                         {{#each ../users}}
-                        <option>{{this.name}}</option>
+                        <option value="{{this.id}}">{{this.name}}</option>
                         {{/each}}
                       </select>
                     </div>
@@ -76,7 +76,8 @@
                       Submit</button>
                   </form>
                   <div class="d-flex justify-content-between align-items-center">
-                    <i class="fas fa-trash-alt"></i>
+                    <a href="/users/{{../user.id}}/boards/{{../board.id}}/tasks/{{this.id}}/delete">
+                      <i class="fas fa-trash-alt"></i></a>
                     <i onclick="closeEditTask('{{this.id}}')" class="far fa-times-circle fa-lg"></i>
                   </div>
                 </div>
@@ -112,30 +113,30 @@
           <div class="card-header card-header-k">IN PROGRESS</div>
           <div class="card-progress-k card-body" id="1">
             {{#each tasks}}
-              {{#ifEquals this.status 1}}
-                <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-                  <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
-                  <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
-                  <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
-                </div>
-              {{/ifEquals}}
+            {{#ifEquals this.status 1}}
+            <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
+              <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+                <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
+                <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
+            </div>
+            {{/ifEquals}}
             {{/each}}
           </div>
         </div>
       </div>
 
       <div class="col-sm-4">
-        <div class="card card-board-k card-drag"  ondrop="drop(event)" ondragover="allowDrop(event)">
+        <div class="card card-board-k card-drag" ondrop="drop(event)" ondragover="allowDrop(event)">
           <div class="card-header card-header-k">DONE</div>
           <div class="card-done-k card-body" id="2">
             {{#each tasks}}
-              {{#ifEquals this.status 2}}
-                <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-                  <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
-                  <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
-                  <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
-                </div>
-              {{/ifEquals}}
+            {{#ifEquals this.status 2}}
+            <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
+              <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+                <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
+                <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
+            </div>
+            {{/ifEquals}}
             {{/each}}
           </div>
         </div>
@@ -145,6 +146,8 @@
     <div class="btn-bottom-k d-flex justify-content-between align-items-center">
       <button onclick="openAddTask()" type="button" class=" btn-k btn"><i class="fas fa-plus"></i>&nbsp; Add
         Task</button>
+      <button onclick="openBoardEdit()" type="button" class="btn btn-k back-k"><i class="fas fa-check"></i>&nbsp;
+        Edit Board</button>
       <button onclick="openBoardDelete()" type="button" class="btn btn-k back-k"><i class="fas fa-times"></i>&nbsp;
         Delete Board</button>
     </div>
@@ -197,6 +200,26 @@
       </div>
     </div>
 
+    {{!---Edit Board Pop Up Card---}}
+    <div id="edit-board" class="form-popup-k col-sm-4">
+      <div class="card card-popup">
+        <div class="card-header card-header-k">Edit Board</div>
+        <div class="card-body">
+          <form action="/users/{{user.id}}/boards/{{board.id}}/edit" method="POST">
+            <div class="form-group">
+              <label for="board-title">Board Title</label>
+              <input name="title" type="text" class="form-control" id="board-title" value="{{board.title}}">
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+            <button type="submit" class="btn-k btn"><i class="fas fa-check"></i>&nbsp;
+              Submit</button>
+            <i onclick="closeBoardEdit()" class="far fa-times-circle fa-lg"></i>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
   </div>
   </main>
 
@@ -232,8 +255,14 @@
     document.getElementById("delete-board").style.display = "none";
   }
 
+  function openBoardEdit() {
+    document.getElementById("edit-board").style.display = "block";
+  }
+  function closeBoardEdit() {
+    document.getElementById("edit-board").style.display = "none";
+  }
+
   //Drag and Drop
- 
 function dragStart(event, taskId) {
   event.dataTransfer.setData("Text", event.target.id);
   event.dataTransfer.setData("TaskId", taskId);
@@ -253,15 +282,20 @@ function drop(event) {
   const postRequest = {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({status: event.target.id})
+      body: JSON.stringify({ status: event.target.id })
+    }
+    fetch(`/users/${taskId}/updatetask`, postRequest)
   }
-  fetch(`/users/${taskId}/updatetask`, postRequest)
-}
+
 
 $('*[id*=Avatar]').each(function() {
 $('[id="' + this.id + '"]:gt(0)').remove();
 })
+$(window).on('load', function() {
+    $("#container").show();
+});
+
 
 </script>
