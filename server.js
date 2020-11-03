@@ -191,7 +191,7 @@ app.post('/users/:task_id/updatetask', async(req, res) => {
 
 
 //this is the point where the server is initialised. 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 3000, () => {
     db.sync().then(async() => {
         const boards = await Board.findAll()
 
