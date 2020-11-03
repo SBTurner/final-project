@@ -37,7 +37,7 @@
             {{#each tasks}}
             {{#ifEquals this.status 0}}
             <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-              <p class="c-text-k card-text"><img id="TaskImage{{this.User.id}}" class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+              <p class="c-text-k card-text"><img class="avatar-k TaskImage{{this.User.id}}" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
                 <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
                 <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
             </div>
@@ -66,7 +66,9 @@
                                 <option value="{{this.id}}">{{this.name}}</option>
                           {{/ifEquals}}
                         {{/each}}
-                        <option value="no">No User</option>
+                        {{#ifEquals this.User.id null}}<option selected="selected" value="no">No User</option>
+                          {{else}} <option value="no">No User</option> {{/ifEquals}}
+                        
                       </select>
                     </div>
                     <div class="form-group">
@@ -120,7 +122,7 @@
             {{#each tasks}}
             {{#ifEquals this.status 1}}
             <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-              <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+              <p class="c-text-k card-text "><img class="avatar-k TaskImage{{this.User.id}}" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
                 <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
                 <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
             </div>
@@ -137,7 +139,7 @@
             {{#each tasks}}
             {{#ifEquals this.status 2}}
             <div ondragstart="dragStart(event, {{this.id}})" draggable="true" id="dragtarget-{{this.id}}">
-              <p class="c-text-k card-text"><img class="avatar-k" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
+              <p class="c-text-k card-text"><img class="avatar-k TaskImage{{this.User.id}}" src="{{this.User.image}}">&nbsp; {{this.desc}} &nbsp;
                 <a onclick="openEditTask({{this.id}})"><i class="fas fa-pencil-alt"></i>&nbsp;</a>
                 <i onclick="openTaskDelete({{this.id}})" class="fas fa-trash-alt"></i></p>
             </div>
@@ -251,7 +253,6 @@
     document.getElementById(`edit-task-${id}`).style.display = "none";
   }
   function openTaskDelete(id) {
-    console.log(id)
     document.getElementById(`delete-task-${id}`).style.display = "block";
   }
   function closeTaskDelete(id) {
@@ -299,13 +300,12 @@ function drop(event, el) {
     fetch(`/users/${taskId}/updatetask`, postRequest)
   }
 
-
 $('*[id*=Avatar]').each(function() {
 $('[id="' + this.id + '"]:gt(0)').remove();
 })
 
 $('#Avatar').hide()
-$('#TaskImage').css('visibility','hidden')
+$('.TaskImage').css('visibility','hidden')
 
 $(window).on('load', function()  {
     $("#container").show();
