@@ -137,8 +137,9 @@ app.post(['/users/:user_id/boards/create'], async(req, res) => {
     // Update board
 app.post(['/users/:user_id/boards/:board_id/edit'], async(req, res) => {
         const board = await Board.findByPk(req.params.board_id)
+        const user = await User.findByPk(req.params.user_id)
         await board.update(req.body)
-        res.redirect(`/board/${board.id}`)
+        res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     // Delete board
 app.get(['/users/:user_id/boards/:board_id/delete'], async(req, res) => {
@@ -152,7 +153,7 @@ app.post('/users/:user_id/boards/:board_id/tasks/create', async(req, res) => {
         const board = await Board.findByPk(req.params.board_id)
         const user = await User.findByPk(req.params.user_id)
         const selectUser = await User.findByPk(req.body.selectpicker)
-        const task = await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+        await Task.create({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     //Update tasks
@@ -160,8 +161,8 @@ app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async(req, re
         const task = await Task.findByPk(req.params.task_id)
         const board = await Board.findByPk(req.params.board_id)
         const user = await User.findByPk(req.params.user_id)
-        await task.update(req.body)
-
+        const selectUser = await User.findByPk(req.body.selectpicker)
+        await task.update({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     //Delete tasks
