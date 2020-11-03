@@ -290,8 +290,13 @@
     fetch(`/users/${taskId}/updatetask`, postRequest)
   }
 
-  $('*[id*=Avatar]').each(function () {
-    $('[id="' + this.id + '"]:gt(0)').remove();
-  })
+
+$('*[id*=Avatar]').each(function() {
+$('[id="' + this.id + '"]:gt(0)').remove();
+})
+$(window).on('load', function() {
+    $("#container").show();
+});
+
 
 </script>
