@@ -1,8 +1,9 @@
 <div class="bg-img-j">
 </div>
+<div class="container">
 <div class="select-user-form-j" id="selectUser">
-    <h3>Select a User</h3>
-    <div class="card-j">
+    <h3 id="lp-header">Select a User</h3>
+    <div class="card-j d-flex flex-row flex-wrap justify-content-center">
         {{#each users}}
         <a href="/users/{{this.id}}/boards">
             <div class="card-body-j" style="background-image: url({{this.image}});">
@@ -16,6 +17,7 @@
     <div>
         <button class="btn-create-j" onclick="openForm()">Create User</button>
     </div>
+</div>
 </div>
 
 <div class="create-user-form-j" id="createUser">

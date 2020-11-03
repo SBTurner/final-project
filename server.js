@@ -23,8 +23,8 @@ const app = express()
 //Custom handlebars
 const hbs = expressHandlebars.create({
     helpers: {
-        taskAvatar: function() {
-
+        removeUser: function() {
+            
         }
     },
     handlebars: allowInsecurePrototypeAccess(Handlebars)
@@ -162,7 +162,7 @@ app.post(['/users/:user_id/boards/:board_id/tasks/:task_id/edit'], async(req, re
         const board = await Board.findByPk(req.params.board_id)
         const user = await User.findByPk(req.params.user_id)
         const selectUser = await User.findByPk(req.body.selectpicker)
-        await task.update({ desc: req.body.desc, status: 0, BoardId: board.id, UserId: selectUser.id })
+        await task.update({ desc: req.body.desc, status: req.body.move, BoardId: board.id, UserId: selectUser.id })
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
     //Delete tasks
