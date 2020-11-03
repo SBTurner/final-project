@@ -86,34 +86,35 @@ app.post(['/users/:user_id/profilepage/edit'], async(req, res) => {
     })
     // Delete user
 app.get(['/users/:user_id/profilepage/delete'], async(req, res) => {
-        const user = await User.findByPk(req.params.user_id)
-        await user.destroy()
-        res.redirect('/')
-    })
-    // Render boards page
+    const user = await User.findByPk(req.params.user_id)
+    await user.destroy()
+    res.redirect('/')
+})
+
+// Render boards page
 app.get(['/users/:user_id/boards'], async(req, res) => {
         const boards = await Board.findAll({
             include: 'tasks',
             nest: true
         })
-        const users = await User.findAll({
-                include: 'tasks',
-                nest: true
-            })
-            // get array of user Ids per board
-        const avatars = []
-        for (i = 0; i < boards.length; i++) {
-            const brd_all_users = []
-            for (j = 0; j < boards[i].tasks.length; j++) {
-                brd_all_users.push(boards[i].tasks[j].UserId)
-            }
-            if (j == boards[i].tasks.length) {
-                const brd_unique_users = brd_all_users.filter((val, idx, self) => { return self.indexOf(val) === idx })
-                avatars.push(brd_unique_users)
-            }
-        }
-        //console.log(avatars)
         const user = await User.findByPk(req.params.user_id)
+        const users = await User.findAll({
+            include: 'tasks',
+            nest: true
+        })
+
+        const avatarsArray = boards.map(async(b) => {
+            const users = {};
+            const board = await Board.findByPk(b.id)
+            const tasks = await board.getTasks({ include: { model: User } })
+            tasks.map((task) => (users[task.User.id] = task.User.image))
+            return {
+                boardId: b.id,
+                users: users
+            }
+        })
+
+        const avatars = await Promise.all(avatarsArray)
         res.render("all-boards", { users, boards, user, avatars })
     })
     //Render individual board page
@@ -124,14 +125,13 @@ app.get('/users/:user_id/boards/:board_id', async(req, res) => {
             nest: true
         })
         const tasks = await board.getTasks({ include: { model: User } })
-        console.log(tasks)
         const user = await User.findByPk(req.params.user_id)
         res.render('board', { board, user, users, tasks })
     })
     // Create board
 app.post(['/users/:user_id/boards/create'], async(req, res) => {
         const user = await User.findByPk(req.params.user_id)
-        const board = await Board.create({ title: req.body.title })
+        const board = await Board.create({ title: req.body.title, image: req.body.image })
         res.redirect(`/users/${user.id}/boards`)
     })
     // Update board
@@ -192,11 +192,11 @@ app.listen(3000, () => {
         const sarah = await User.create({ "name": "Sarah", "image": "https://images.pexels.com/photos/2364633/pexels-photo-2364633.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         const krystyna = await User.create({ "name": "Krystyna", "image": "https://images.pexels.com/photos/589840/pexels-photo-589840.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         const josie = await User.create({ "name": "Josie", "image": "https://images.pexels.com/photos/617965/pexels-photo-617965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
-        const board1 = await Board.create({ "title": "Board 1" })
+        const board1 = await Board.create({ "title": "Board 1", "image": "https://images.pexels.com/photos/3335511/pexels-photo-3335511.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" })
         await Task.create({ "desc": "Feed dog", "status": 0, "BoardId": board1.id, UserId: sarah.id })
         await Task.create({ "desc": "Text mum", "status": 0, "BoardId": board1.id, UserId: krystyna.id })
         await Task.create({ "desc": "Put on clothes", "status": 0, "BoardId": board1.id, UserId: josie.id })
-        const board2 = await Board.create({ "title": "Board 2" })
+        const board2 = await Board.create({ "title": "Board 2", "image": "https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         await Task.create({ "desc": "Go Shopping", "status": 0, "BoardId": board2.id, UserId: krystyna.id })
         await Task.create({ "desc": "Take bins out", "status": 0, "BoardId": board2.id, UserId: josie.id })
         await Task.create({ "desc": "Eat food", "status": 0, "BoardId": board2.id, UserId: sarah.id })
