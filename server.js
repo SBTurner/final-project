@@ -3,21 +3,10 @@ const Handlebars = require("handlebars")
 const expressHandlebars = require("express-handlebars")
 const { allowInsecurePrototypeAccess } = require("@handlebars/allow-prototype-access")
 
-const { Board, Task, User, db } = require("./models/models")
+const { Board, Task, TaskItem, User, db } = require("./models/models")
 const { request } = require("express")
 
 const app = express()
-
-// const handlebars = expressHandlebars({
-//     handlebars: allowInsecurePrototypeAccess(Handlebars)
-// })
-
-// app.use(express.static('public')) //this is a folder name that you will save your html etc files in. 
-// app.engine('handlebars', handlebars)
-// app.set("view engine", "handlebars")
-// //Insert congiguration for handling form POST requests:
-// app.use(express.urlencoded({ extended: true }))
-// app.use(express.json())
 
 
 //Custom handlebars
@@ -32,30 +21,12 @@ const hbs = expressHandlebars.create({
 hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
+
 app.use(express.static('public'))
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
-
-//---Custom handlebars
-// const hbs = expressHandlebars.create({
-//     helpers: {
-//         taskAvatar: function (task, users) {
-//             if(task.UserId) {
-//                 return users.image;
-//             }
-//         }
-//     }, 
-//     handlebars: allowInsecurePrototypeAccess(Handlebars)
-// })
-
-// app.use(express.static('public'))
-// app.engine('handlebars', hbs.engine)
-// app.set('view engine', 'handlebars')
-// app.use(express.urlencoded({ extended: true }))
-// app.use(express.json())
 
 
 //-----ROUTES-------
@@ -125,7 +96,7 @@ app.get('/users/:user_id/boards/:board_id', async(req, res) => {
             include: 'tasks',
             nest: true
         })
-        const tasks = await board.getTasks({ include: { model: User } })
+        const tasks = await board.getTasks({ include: [{ model: User}, {model: TaskItem, as: "items"}] })
         const user = await User.findByPk(req.params.user_id)
         res.render('board', { board, user, users, tasks })
     })
@@ -188,7 +159,12 @@ app.post('/users/:task_id/updatetask', async(req, res) => {
     await task.update({ status: req.body.status })
     res.send()
 })
-
+    //Update progress
+app.post('/users/:taskitem_id/update-taskitem', async(req, res) => {
+    const taskitem = await TaskItem.findByPk(req.params.taskitem_id)
+    await taskitem.update({ progress: req.body.progress })
+    res.send()
+})
 
 //this is the point where the server is initialised. 
 app.listen(process.env.PORT || 3000, () => {
@@ -204,11 +180,16 @@ app.listen(process.env.PORT || 3000, () => {
         const board1 = await Board.create({ "title": "Board 1", "image": "https://images.pexels.com/photos/1121123/pexels-photo-1121123.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         await Task.create({ "desc": "Feed dog", "status": 0, "BoardId": board1.id, UserId: sarah.id })
         await Task.create({ "desc": "Text mum", "status": 0, "BoardId": board1.id, UserId: krystyna.id })
-        await Task.create({ "desc": "Put on clothes", "status": 0, "BoardId": board1.id, UserId: josie.id })
+        await Task.create({ "desc": "Create Kanban", "status": 0, "BoardId": board1.id, UserId: josie.id })
         const board2 = await Board.create({ "title": "Board 2", "image": "https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         await Task.create({ "desc": "Go Shopping", "status": 0, "BoardId": board2.id, UserId: krystyna.id })
         await Task.create({ "desc": "Take bins out", "status": 0, "BoardId": board2.id, UserId: josie.id })
         await Task.create({ "desc": "Eat food", "status": 0, "BoardId": board2.id, UserId: sarah.id })
+        await TaskItem.create({ "item": "Add CSS", "progress": 0, TaskId: 3})
+        await TaskItem.create({ "item": "Make responsive", "progress": 1, TaskId: 3})
+        await TaskItem.create({ "item": "Style forms", "progress": 0, TaskId: 3})
+        await TaskItem.create({ "item": "Run cypress tests", "progress": 0, TaskId: 3})
+
 
     }).catch(console.error)
     console.log('port = ', process.env.PORT)
