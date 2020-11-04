@@ -8,6 +8,13 @@
     background-color: #67515D
 }
 
+.custom-control-label:before{
+    background-color:white;
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+    background-color:green;
+}
+
 a,
 a:link,
 a:active,
