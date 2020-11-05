@@ -59,6 +59,11 @@ a:visited {
     padding: .5rem;
     border-radius: .5rem;
     background-color: #f8f9fa;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    
+    
 }
 
 #board-title-k {
