@@ -24,6 +24,7 @@
   "homepage": "https://github.com/krystyna-garwol/final-project#readme",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
+    "axios": "^0.21.0",
     "bootstrap": "^4.5.3",
     "express": "^4.17.1",
     "express-handlebars": "^5.2.0",
@@ -31,6 +32,7 @@
     "nodemon": "^2.0.6",
     "pg": "^8.4.2",
     "sequelize": "^6.3.5",
+    "socket.io": "^2.3.0",
     "sqlite3": "^5.0.0"
   },
   "devDependencies": {
