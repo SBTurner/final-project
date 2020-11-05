@@ -4,7 +4,6 @@ const expressHandlebars = require("express-handlebars")
 const { allowInsecurePrototypeAccess } = require("@handlebars/allow-prototype-access")
 
 const { Board, Task, TaskItem, User, db } = require("./models/models")
-const { request } = require("express")
 
 const app = express()
 
@@ -153,6 +152,24 @@ app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/delete'], async(req, r
         await task.destroy()
         res.redirect(`/users/${user.id}/boards/${board.id}`)
     })
+    //Add task item
+app.post('/users/:user_id/boards/:board_id/tasks/:task_id/items/create', async(req, res) => {
+    const board = await Board.findByPk(req.params.board_id)
+    const user = await User.findByPk(req.params.user_id)
+    const task = await Task.findByPk(req.params.task_id)
+    await TaskItem.create({ item: req.body.item, progress: 0, TaskId: task.id})
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
+})
+    //Delete Task item
+app.get(['/users/:user_id/boards/:board_id/tasks/:task_id/items/:item_id/delete'], async(req, res) => {
+    const board = await Board.findByPk(req.params.board_id)
+    const user = await User.findByPk(req.params.user_id)
+    const task = await Task.findByPk(req.params.task_id)
+    const taskitem = await TaskItem.findByPk(req.params.item_id)
+    await taskitem.destroy()
+    res.redirect(`/users/${user.id}/boards/${board.id}`)
+})
+
     //Update status
 app.post('/users/:task_id/updatetask', async(req, res) => {
     const task = await Task.findByPk(req.params.task_id)
@@ -179,7 +196,7 @@ app.listen(process.env.PORT || 3000, () => {
         const josie = await User.create({ "name": "Josie", "image": "https://images.pexels.com/photos/617965/pexels-photo-617965.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         const board1 = await Board.create({ "title": "Board 1", "image": "https://images.pexels.com/photos/1121123/pexels-photo-1121123.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         await Task.create({ "desc": "Feed dog", "status": 0, "BoardId": board1.id, UserId: sarah.id })
-        await Task.create({ "desc": "Text mum", "status": 0, "BoardId": board1.id, UserId: krystyna.id })
+        await Task.create({ "desc": "Prepare for exam", "status": 0, "BoardId": board1.id, UserId: krystyna.id })
         await Task.create({ "desc": "Create Kanban", "status": 0, "BoardId": board1.id, UserId: josie.id })
         const board2 = await Board.create({ "title": "Board 2", "image": "https://images.pexels.com/photos/268362/pexels-photo-268362.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" })
         await Task.create({ "desc": "Go Shopping", "status": 0, "BoardId": board2.id, UserId: krystyna.id })
@@ -189,6 +206,9 @@ app.listen(process.env.PORT || 3000, () => {
         await TaskItem.create({ "item": "Make responsive", "progress": 1, TaskId: 3})
         await TaskItem.create({ "item": "Style forms", "progress": 0, TaskId: 3})
         await TaskItem.create({ "item": "Run cypress tests", "progress": 0, TaskId: 3})
+        await TaskItem.create({ "item": "Buy a notebook", "progress": 0, TaskId: 2})
+        await TaskItem.create({ "item": "Organise pens", "progress": 1, TaskId: 2})
+        await TaskItem.create({ "item": "Buy to correct textbooks", "progress": 1, TaskId: 2})
 
 
     }).catch(console.error)

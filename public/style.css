@@ -125,7 +125,15 @@ a:visited {
 .btn-edit-k {
     margin-bottom: 2rem;
 }
-
+.btn-add-taskitem {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
 .form-popup-k {
     display: none;
     position: fixed;
