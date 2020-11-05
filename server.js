@@ -208,7 +208,7 @@ app.listen(process.env.PORT || 3000, () => {
         await TaskItem.create({ "item": "Run cypress tests", "progress": 0, TaskId: 3})
         await TaskItem.create({ "item": "Buy a notebook", "progress": 0, TaskId: 2})
         await TaskItem.create({ "item": "Organise pens", "progress": 1, TaskId: 2})
-        await TaskItem.create({ "item": "Buy to correct textbooks", "progress": 1, TaskId: 2})
+        await TaskItem.create({ "item": "Buy correct textbooks", "progress": 1, TaskId: 2})
 
 
     }).catch(console.error)
