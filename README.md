@@ -1,6 +1,7 @@
 # final-project
 ### Josie, Krystyna and Sarah
-
+## Progress bar (Individual Project)
+![](https://user-images.githubusercontent.com/72227066/98234890-04eb1e00-1f59-11eb-9e78-08bb8f7e703e.png)
 ## UML diagram
 <a href="url"><img src="https://user-images.githubusercontent.com/72227066/97570102-576b8e00-19df-11eb-8dc9-c8e91a4611e0.png" align="center" height="300" ></a>
 ## Wireframes
